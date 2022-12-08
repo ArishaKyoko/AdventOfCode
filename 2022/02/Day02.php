@@ -19,28 +19,28 @@ class Day02
 	private const POINTS_ROCK = 1;
 	private const POINTS_SCISSOR = 3;
 
-	private const POINTS_PLAYER_ONE = [
-		self::ROCK_PLAYER_ONE => self::POINTS_ROCK,
-		self::PAPER_PLAYER_ONE => self::POINTS_PAPER,
-		self::SCISSOR_PLAYER_ONE => self::POINTS_SCISSOR,
-	];
-
-	private const POINTS_PLAYER_TWO = [
+	private const POINTS = [
 		self::ROCK_PLAYER_TWO => self::POINTS_ROCK,
 		self::PAPER_PLAYER_TWO => self::POINTS_PAPER,
 		self::SCISSOR_PLAYER_TWO => self::POINTS_SCISSOR,
 	];
 
-	private const WINS_PLAYER_ONE = [
+	private const LOOSES = [
 		self::ROCK_PLAYER_ONE => self::SCISSOR_PLAYER_TWO,
 		self::PAPER_PLAYER_ONE => self::ROCK_PLAYER_TWO,
 		self::SCISSOR_PLAYER_ONE => self::PAPER_PLAYER_TWO,
 	];
 
-	private const WINS_PLAYER_TWO = [
+	private const WINS_FROM_TWO = [
 		self::ROCK_PLAYER_TWO => self::SCISSOR_PLAYER_ONE,
 		self::PAPER_PLAYER_TWO => self::ROCK_PLAYER_ONE,
 		self::SCISSOR_PLAYER_TWO => self::PAPER_PLAYER_ONE,
+	];
+
+	private const WINS_FROM_ONE = [
+		self::ROCK_PLAYER_ONE => self::PAPER_PLAYER_TWO,
+		self::PAPER_PLAYER_ONE => self::SCISSOR_PLAYER_TWO,
+		self::SCISSOR_PLAYER_ONE => self::ROCK_PLAYER_TWO,
 	];
 
 	private const DRAWS = [
@@ -88,23 +88,17 @@ class Day02
 	private function _partOne(): void
 	{
 		foreach ($this->_combinations as $game) {
-			$score_one = self::POINTS_PLAYER_ONE[$game[0]];
-			$score_two = self::POINTS_PLAYER_TWO[$game[1]];
-
-			if (self::WINS_PLAYER_ONE[$game[0]] === $game[1]) {
-				$score_one += self::POINTS_WIN;
-			}
+			$score = self::POINTS[$game[1]];
 
 			if (self::DRAWS[$game[0]] === $game[1]) {
-				$score_one += self::POINTS_DRAW;
-				$score_two += self::POINTS_DRAW;
+				$score += self::POINTS_DRAW;
+			} elseif (self::WINS_FROM_TWO[$game[1]] === $game[0]) {
+				$score += self::POINTS_WIN;
+			} else {
+				$score += self::POINTS_LOSE;
 			}
 
-			if (self::WINS_PLAYER_TWO[$game[1]] === $game[0]) {
-				$score_two += self::POINTS_WIN;
-			}
-
-			$this->_puzzleOne[] = $score_two;
+			$this->_puzzleOne[] = $score;
 		}
 	}
 
@@ -112,17 +106,17 @@ class Day02
 	{
 		foreach ($this->_combinations as $game) {
 			switch ($game[1]) {
-			    case self::ROCK_PLAYER_TWO: 	//lose
+			    case self::ROCK_PLAYER_TWO: 	//lose x
 					$score = self::POINTS_LOSE;
-					$score += self::POINTS_PLAYER_TWO[self::WINS_PLAYER_ONE[$game[0]]];
+					$score += self::POINTS[self::LOOSES[$game[0]]];
 			        break;
-			    case self::PAPER_PLAYER_TWO:	// draw
+			    case self::PAPER_PLAYER_TWO:	// draw y
 					$score = self::POINTS_DRAW;
-					$score += self::POINTS_PLAYER_TWO[self::DRAWS[$game[0]]];
+					$score += self::POINTS[self::DRAWS[$game[0]]];
 			        break;
-			    case self::SCISSOR_PLAYER_TWO:	// win
+			    case self::SCISSOR_PLAYER_TWO:	// win z
 					$score = self::POINTS_WIN;
-					$score += self::POINTS_PLAYER_ONE[self::WINS_PLAYER_TWO[$game[1]]];
+					$score += self::POINTS[self::WINS_FROM_ONE[$game[0]]];
 			        break;
 			}
 
