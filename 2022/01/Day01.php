@@ -9,7 +9,7 @@ class Day01
 
 	public function __construct()
 	{
-		$this->getArrayFromFileWithBlancLines();
+		$this->getArrayFromFile();
 
 		$this->_partOne();
 		echo 'Max Calories Elve: ' . max($this->_elvesSum) . "\n";
@@ -18,7 +18,7 @@ class Day01
 		echo 'Max three Calories Elves: ' . array_sum($this->_topThreeElvesCallories) . "\n";
 	}
 
-	public function getArrayFromFileWithBlancLines(): void
+	public function getArrayFromFile(): void
 	{
 		$fileData = file('input.txt');
 
@@ -26,19 +26,16 @@ class Day01
 			return;
 		}
 
-		$rows = [];
 		$j = 0;
 		foreach ($fileData as $iValue) {
 			/** @var array $explode */
 			$explode = explode("\n", $iValue);
 			if (is_numeric($explode[0])) {
-				$rows[$j][] = $explode[0];
+				$this->elves[$j][] = $explode[0];
 				continue;
 			}
 			$j++;
 		}
-
-		$this->elves = $rows;
 	}
 
 	private function _partOne(): void

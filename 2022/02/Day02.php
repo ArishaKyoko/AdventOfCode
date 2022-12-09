@@ -55,7 +55,7 @@ class Day02
 
 	public function __construct()
 	{
-		$this->getArrayFromFileWithMultiArray();
+		$this->getArrayFromFile();
 
 		$this->_partOne();
 		echo 'Totally Score Part One: ' . array_sum($this->_puzzleOne) . "\n";
@@ -64,7 +64,7 @@ class Day02
 		echo 'Totally Score Part Two: ' . array_sum($this->_puzzleTwo) . "\n";
 	}
 
-	public function getArrayFromFileWithMultiArray(): void
+	public function getArrayFromFile(): void
 	{
 		$fileData = file('input.txt');
 
@@ -72,17 +72,14 @@ class Day02
 			return;
 		}
 
-		$rows = [];
 		foreach ($fileData as $iValue) {
 			/** @var array $explode */
 			$explode = explode(' ', $iValue);
-			$rows[] = [
+			$this->_combinations[] = [
 				$explode[0],
 				str_replace("\n", '', $explode[1]),
 			];
 		}
-
-		$this->_combinations = $rows;
 	}
 
 	private function _partOne(): void

@@ -28,14 +28,11 @@ class Day03
 			return;
 		}
 
-		$rows = [];
 		foreach ($fileData as $iValue) {
 			/** @var array $explode */
 			$explode = explode("\n", $iValue);
-			$rows[] = $explode[0];
+			$this->_items[] = $explode[0];
 		}
-
-		$this->_items = $rows;
 	}
 
 	private function _partOne(): void
