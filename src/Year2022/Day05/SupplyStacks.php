@@ -1,8 +1,16 @@
 <?php
 declare(strict_types=1);
 
-class Day05
+namespace AoC\Year2022\Day05;
+
+use AoC\Traits\CanReadFiles;
+
+require '../../../vendor/autoload.php';
+
+class SupplyStacks
 {
+	use CanReadFiles;
+
 	// example
 //	private array $_crates = [
 //		1 => ['Z', 'N'],
@@ -40,25 +48,19 @@ class Day05
 
 	public function getArrayFromFile(): void
 	{
-		$fileData = file('input.txt');
-
-		if (!is_array($fileData)) {
-			return;
-		}
+//		$fileData = $this->getFileData('example.txt');
+		$fileData = $this->getFileData('input.txt');
 
 		$buildCrates = true;
 		foreach ($fileData as $iValue) {
-			/** @var array $explode */
-			$explode = explode("\n", $iValue);
-
 			if ($buildCrates) {
-				if ($explode[0] === '') {
+				if ($iValue === '') {
 					$buildCrates = false;
 				}
 				continue;
 			}
 
-			$this->_rearrangement[] = $explode[0];
+			$this->_rearrangement[] = $iValue;
 		}
 	}
 
@@ -115,4 +117,4 @@ class Day05
 		}
 	}
 }
-new Day05();
+new SupplyStacks();

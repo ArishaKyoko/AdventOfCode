@@ -1,8 +1,16 @@
 <?php
 declare(strict_types=1);
 
-class Day04
+namespace AoC\Year2022\Day04;
+
+use AoC\Traits\CanReadFiles;
+
+require '../../../vendor/autoload.php';
+
+class CampCleanup
 {
+	use CanReadFiles;
+
 	private array $_pairs;
 	private int $_partOne = 0;
 	private int $_partTwo = 0;
@@ -20,18 +28,15 @@ class Day04
 
 	public function getArrayFromFile(): void
 	{
-		$fileData = file('input.txt');
-
-		if (!is_array($fileData)) {
-			return;
-		}
+//		$fileData = $this->getFileData('example.txt');
+		$fileData = $this->getFileData('input.txt');
 
 		foreach ($fileData as $iValue) {
 			/** @var array $explode */
 			$explode = explode(',', $iValue);
 			$this->_pairs[] = [
 				$explode[0],
-				str_replace("\n", '', $explode[1]),
+				$explode[1],
 			];
 		}
 	}
@@ -86,4 +91,4 @@ class Day04
 		}
 	}
 }
-new Day04();
+new CampCleanup();

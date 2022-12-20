@@ -1,8 +1,16 @@
 <?php
 declare(strict_types=1);
 
-class Day02
+namespace AoC\Year2022\Day02;
+
+use AoC\Traits\CanReadFiles;
+
+require '../../../vendor/autoload.php';
+
+class RockPaperScissors
 {
+	use CanReadFiles;
+
 	private const ROCK_PLAYER_ONE = 'A';
 	private const PAPER_PLAYER_ONE = 'B';
 	private const SCISSOR_PLAYER_ONE = 'C';
@@ -66,18 +74,15 @@ class Day02
 
 	public function getArrayFromFile(): void
 	{
-		$fileData = file('input.txt');
-
-		if (!is_array($fileData)) {
-			return;
-		}
+//		$fileData = $this->getFileData('example.txt');
+		$fileData = $this->getFileData('input.txt');
 
 		foreach ($fileData as $iValue) {
 			/** @var array $explode */
 			$explode = explode(' ', $iValue);
 			$this->_combinations[] = [
 				$explode[0],
-				str_replace("\n", '', $explode[1]),
+				$explode[1],
 			];
 		}
 	}
@@ -115,6 +120,9 @@ class Day02
 					$score = self::POINTS_WIN;
 					$score += self::POINTS[self::WINS_FROM_ONE[$game[0]]];
 			        break;
+				default:
+					$score = 0;
+					break;
 			}
 
 			$this->_puzzleTwo[] = $score;
@@ -122,4 +130,4 @@ class Day02
 	}
 }
 
-new Day02();
+new RockPaperScissors();

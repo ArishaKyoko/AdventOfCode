@@ -1,8 +1,16 @@
 <?php
 declare(strict_types=1);
 
-class Day03
+namespace AoC\Year2022\Day03;
+
+use AoC\Traits\CanReadFiles;
+
+require '../../../vendor/autoload.php';
+
+class RucksackReorganization
 {
+	use CanReadFiles;
+
 	private array $_items = [];
 	private array $_partOne = [];
 	private array $_partTwo = [];
@@ -22,17 +30,9 @@ class Day03
 
 	public function getArrayFromFile(): void
 	{
-		$fileData = file('input.txt');
+//		$this->_items = $this->getFileData('example.txt');
+		$this->_items = $this->getFileData('input.txt');
 
-		if (!is_array($fileData)) {
-			return;
-		}
-
-		foreach ($fileData as $iValue) {
-			/** @var array $explode */
-			$explode = explode("\n", $iValue);
-			$this->_items[] = $explode[0];
-		}
 	}
 
 	private function _partOne(): void
@@ -44,18 +44,18 @@ class Day03
 			$diff = array_unique(array_intersect($string1, $string2));
 			$newString = implode('', $diff);
 
-			$prirority = strpos(self::ALPHABET, strtolower($newString)) + 1;
+			$priority = strpos(self::ALPHABET, strtolower($newString)) + 1;
 			if (ctype_upper($newString)) {
-				$prirority += 26;
+				$priority += 26;
 			}
 
-			$this->_partOne[] = $prirority;
+			$this->_partOne[] = $priority;
 		}
 	}
 
 	private function _partTwo(): void
 	{
-		$prepairedData = [];
+		$repairedData = [];
 		$tmp = [];
 		$j = 0;
 		foreach ($this->_items as $item) {
@@ -63,13 +63,13 @@ class Day03
 			$j++;
 
 			if ($j === 3) {
-				$prepairedData[] = $tmp;
+				$repairedData[] = $tmp;
 				$j = 0;
 				$tmp = [];
 			}
 		}
 
-		foreach ($prepairedData as $data) {
+		foreach ($repairedData as $data) {
 			$string1 = str_split($data[0]);
 			$string2 = str_split($data[1]);
 			$string3 = str_split($data[2]);
@@ -77,14 +77,14 @@ class Day03
 			$diff = array_unique(array_intersect($string1, $string2, $string3));
 			$newString = implode('', $diff);
 
-			$prirority = strpos(self::ALPHABET, strtolower($newString)) + 1;
+			$priority = strpos(self::ALPHABET, strtolower($newString)) + 1;
 			if (ctype_upper($newString)) {
-				$prirority += 26;
+				$priority += 26;
 			}
 
-			$this->_partTwo[] = $prirority;
+			$this->_partTwo[] = $priority;
 		}
 
 	}
 }
-new Day03();
+new RucksackReorganization();

@@ -1,9 +1,17 @@
 <?php
 declare(strict_types=1);
 
-class Day01
+namespace AoC\Year2022\Day01;
+
+use AoC\Traits\CanReadFiles;
+
+require '../../../vendor/autoload.php';
+
+class CalorieCounting
 {
-	private array $_elves;
+	use CanReadFiles;
+
+	private array $_elves = [];
 	private array $_elvesSum = [];
 	private array $_topThreeElvesCallories = [];
 
@@ -20,18 +28,13 @@ class Day01
 
 	public function getArrayFromFile(): void
 	{
-		$fileData = file('input.txt');
-
-		if (!is_array($fileData)) {
-			return;
-		}
+//		$fileData = $this->getFileData('example.txt');
+		$fileData = $this->getFileData('input.txt');
 
 		$j = 0;
 		foreach ($fileData as $iValue) {
-			/** @var array $explode */
-			$explode = explode("\n", $iValue);
-			if (is_numeric($explode[0])) {
-				$this->elves[$j][] = $explode[0];
+			if (is_numeric($iValue)) {
+				$this->elves[$j][] = $iValue;
 				continue;
 			}
 			$j++;
@@ -53,4 +56,4 @@ class Day01
 		}
 	}
 }
-new Day01();
+new CalorieCounting();
