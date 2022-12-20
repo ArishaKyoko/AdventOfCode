@@ -45,9 +45,9 @@ class TuningTrouble
 	 */
     private function getArrayFromFile(string $filename): array
 	{
-		$fileDataExample1 = $this->getFileData($filename);
+		$fileData = $this->getFileData($filename);
 		$fileToArray = [];
-		foreach ($fileDataExample1 as $iValue) {
+		foreach ($fileData as $iValue) {
 			$fileToArray = str_split($iValue);
 		}
 		return $fileToArray;
