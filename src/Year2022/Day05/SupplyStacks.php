@@ -11,12 +11,11 @@ class SupplyStacks
 {
 	use CanReadFiles;
 
-	// example
-//	private array $_crates = [
-//		1 => ['Z', 'N'],
-//		2 => ['M', 'C', 'D'],
-//		3 => ['P'],
-//	];
+	private array $_cratesExample = [
+		1 => ['Z', 'N'],
+		2 => ['M', 'C', 'D'],
+		3 => ['P'],
+	];
 
 	private array $_crates = [
 		1 => ['Z', 'J', 'G'],
@@ -30,27 +29,29 @@ class SupplyStacks
 		9 => ['M', 'C', 'D', 'P', 'F', 'H', 'B', 'T'],
 	];
 
-	private array $_rearrangement;
-
-	private array $_partOne = [];
-	private array $_partTwo = [];
-
 	public function __construct()
 	{
-		$this->getArrayFromFile();
+		$rearrangementExample = $this->getArrayFromFile('example.txt');
+		$rearrangement = $this->getArrayFromFile('input.txt');
 
-		$this->_partOne();
-		echo 'Crates end up top of stack: ' . implode('', $this->_partOne) . "\n";
+		echo 'Crates end up top of stack: ' . $this->_partOne($rearrangementExample, $this->_cratesExample) . " (example)\n";
+		echo 'Crates end up top of stack: ' . $this->_partOne($rearrangement, $this->_crates) . "\n";
 
-		$this->_partTwo();
-		echo 'Crates end up top of stack: ' . implode('', $this->_partTwo) . "\n";
+		echo "\n";
+
+		echo 'Crates end up top of stack: ' . $this->_partTwo($rearrangementExample, $this->_cratesExample) . " (example)\n";
+		echo 'Crates end up top of stack: ' . $this->_partTwo($rearrangement, $this->_crates) . "\n";
 	}
 
-	public function getArrayFromFile(): void
+	/**
+	 * @param string $filename
+	 * @return array
+	 */
+	public function getArrayFromFile(string $filename): array
 	{
-//		$fileData = $this->getFileData('example.txt');
-		$fileData = $this->getFileData('input.txt');
+		$fileData = $this->getFileData($filename);
 
+		$fileToArray = [];
 		$buildCrates = true;
 		foreach ($fileData as $iValue) {
 			if ($buildCrates) {
@@ -60,61 +61,84 @@ class SupplyStacks
 				continue;
 			}
 
-			$this->_rearrangement[] = $iValue;
+			$fileToArray[] = $iValue;
 		}
+
+		return $fileToArray;
 	}
 
-	private function _partOne(): void
+	/**
+	 * @param array $rearrangements
+	 * @param array $crates
+	 * @return string
+	 */
+	private function _partOne(array $rearrangements, array $crates): string
 	{
-		$_crates = $this->_crates;
-		foreach ($this->_rearrangement as $rearrangement) {
-			/** @var array $explode */
-			$explode = explode(' ', $rearrangement);
-			$move = (int) $explode[1];
-			$from = (int) $explode[3];
-			$to = (int) $explode[5];
+		foreach ($rearrangements as $rearrangement) {
+			[$move, $from, $to] = self::_splitRearrangements($rearrangement);
 
 			for ($i = 1; $i <= $move; $i++) {
-				$slice = $_crates[$from][count($_crates[$from])-1];
-				$_crates[$to][] = $slice;
-				unset($_crates[$from][count($_crates[$from])-1]);
+				$slice = $crates[$from][count($crates[$from])-1];
+				$crates[$to][] = $slice;
+				unset($crates[$from][count($crates[$from])-1]);
 			}
 
 			// keys neu setzen
-			foreach ($_crates as &$crate) {
+			foreach ($crates as &$crate) {
 				$crate = array_values($crate);
 			}
 			unset($crate);
 		}
 
-		foreach ($_crates as $crates) {
-			$this->_partOne[] = $crates[count($crates)-1];
+		$endsUp = [];
+		foreach ($crates as $crate) {
+			$endsUp[] = $crate[count($crate)-1];
 		}
+
+		return implode('', $endsUp);
 	}
 
-	private function _partTwo(): void
+	/**
+	 * @param array $rearrangements
+	 * @param array $crates
+	 * @return string
+	 */
+	private function _partTwo(array $rearrangements, array $crates): string
 	{
-		$_crates = $this->_crates;
-		foreach ($this->_rearrangement as $rearrangement) {
-			/** @var array $explode */
-			$explode = explode(' ', $rearrangement);
-			$move = (int) $explode[1];
-			$from = (int) $explode[3];
-			$to = (int) $explode[5];
+		foreach ($rearrangements as $rearrangement) {
+			[$move, $from, $to] = self::_splitRearrangements($rearrangement);
 
 			//todo
-			array_splice($_crates[$from], -1, $move, $_crates[$to]);
+			array_splice($crates[$from], -1, $move, $crates[$to]);
 
 			// keys neu setzen
-			foreach ($_crates as &$crate) {
+			foreach ($crates as &$crate) {
 				$crate = array_values($crate);
 			}
 			unset($crate);
 		}
 
-		foreach ($_crates as $crates) {
-			$this->_partTwo[] = $crates[count($crates)-1];
+		$endsUp = [];
+		foreach ($crates as $crate) {
+			$endsUp[] = $crate[count($crate)-1];
 		}
+
+		return implode('', $endsUp);
+	}
+
+	/**
+	 * @param string $rearrangement
+	 * @return int[]
+	 */
+	private static function _splitRearrangements(string $rearrangement): array
+	{
+		/** @var array $explode */
+		$explode = explode(' ', $rearrangement);
+		return [
+			(int) $explode[1], //move
+			(int) $explode[3], //from
+			(int) $explode[5], //to
+		];
 	}
 }
 new SupplyStacks();

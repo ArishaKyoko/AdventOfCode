@@ -11,49 +11,75 @@ class CalorieCounting
 {
 	use CanReadFiles;
 
-	private array $_elves = [];
-	private array $_elvesSum = [];
-	private array $_topThreeElvesCallories = [];
-
 	public function __construct()
 	{
-		$this->getArrayFromFile();
+		$elves = $this->getArrayFromFile('input.txt');
+		$elvesExample = $this->getArrayFromFile('example.txt');
 
-		$this->_partOne();
-		echo 'Max Calories Elve: ' . max($this->_elvesSum) . "\n";
+		$elvesSumExample = $this->_partOne($elvesExample);
+		echo 'Max Calories Elve: ' . max($elvesSumExample) . " (example)\n";
+		$elvesSum = $this->_partOne($elves);
+		echo 'Max Calories Elve: ' . max($elvesSum) . "\n";
 
-		$this->_partTwo();
-		echo 'Max three Calories Elves: ' . array_sum($this->_topThreeElvesCallories) . "\n";
+		echo "\n";
+
+		$topThreeElvesCaloriesExample = $this->_partTwo($elvesSumExample);
+		echo 'Max three Calories Elves: ' . array_sum($topThreeElvesCaloriesExample) . " (example)\n";
+		$topThreeElvesCalories = $this->_partTwo($elvesSum);
+		echo 'Max three Calories Elves: ' . array_sum($topThreeElvesCalories) . "\n";
 	}
 
-	public function getArrayFromFile(): void
+	/**
+	 * @param string $filename
+	 * @return array
+	 */
+	public function getArrayFromFile(string $filename): array
 	{
-//		$fileData = $this->getFileData('example.txt');
-		$fileData = $this->getFileData('input.txt');
+		$fileData = $this->getFileData($filename);
 
+		$fileToArray = [];
 		$j = 0;
 		foreach ($fileData as $iValue) {
 			if (is_numeric($iValue)) {
-				$this->elves[$j][] = $iValue;
+				$fileToArray[$j][] = $iValue;
 				continue;
 			}
 			$j++;
 		}
+
+		return $fileToArray;
 	}
 
-	private function _partOne(): void
+	/**
+	 * Sum Calories pro elf
+	 *
+	 * @param array $elves
+	 * @return array
+	 */
+	private function _partOne(array $elves): array
 	{
-		foreach ($this->_elves as $elve => $calories) {
-			$this->_elvesSum[$elve] = array_sum($calories);
+		$elvesSum = [];
+		foreach ($elves as $elf => $calories) {
+			$elvesSum[$elf] = array_sum($calories);
 		}
+
+		return $elvesSum;
 	}
 
-	private function _partTwo(): void
+	/**
+	 * Sum of Calories of top three elves
+	 *
+	 * @param array $elvesSum
+	 * @return array
+	 */
+	private function _partTwo(array $elvesSum): array
 	{
-		rsort($this->_elvesSum);
+		$topThreeElvesCalories = [];
+		rsort($elvesSum);
 		for ($i = 0; $i < 3; $i++) {
-			$this->_topThreeElvesCallories[] = $this->_elvesSum[$i];
+			$topThreeElvesCalories[] = $elvesSum[$i];
 		}
+		return $topThreeElvesCalories;
 	}
 }
 new CalorieCounting();

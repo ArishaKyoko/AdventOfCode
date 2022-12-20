@@ -11,33 +11,35 @@ class RucksackReorganization
 {
 	use CanReadFiles;
 
-	private array $_items = [];
-	private array $_partOne = [];
-	private array $_partTwo = [];
-
 	private const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 
 	public function __construct()
 	{
-		$this->getArrayFromFile();
+		$itemsExample = $this->getArrayFromFile('example.txt');
+		$items = $this->getArrayFromFile('input.txt');
 
-		$this->_partOne();
-		echo 'Sum of Priorities Part One: ' . array_sum($this->_partOne) . "\n";
+		echo 'Sum of Priorities Part One: ' . $this->_partOne($itemsExample) . " (example)\n";
+		echo 'Sum of Priorities Part One: ' . $this->_partOne($items) . "\n";
 
-		$this->_partTwo();
-		echo 'Sum of Priorities Part One: ' . array_sum($this->_partTwo) . "\n";
+		echo "\n";
+
+		echo 'Sum of Priorities Part One: ' . $this->_partTwo($itemsExample) . " (example)\n";
+		echo 'Sum of Priorities Part One: ' . $this->_partTwo($items) . "\n";
 	}
 
-	public function getArrayFromFile(): void
+	public function getArrayFromFile(string $filename): array
 	{
-//		$this->_items = $this->getFileData('example.txt');
-		$this->_items = $this->getFileData('input.txt');
-
+		return $this->getFileData($filename);
 	}
 
-	private function _partOne(): void
+	/**
+	 * @param array $items
+	 * @return int
+	 */
+	private function _partOne(array $items): int
 	{
-		foreach ($this->_items as $item) {
+		$priorities = [];
+		foreach ($items as $item) {
 			$count = strlen($item);
 			$string1 = str_split(substr($item, 0, ($count/2)));
 			$string2 = str_split(substr($item, ($count/2)));
@@ -49,16 +51,18 @@ class RucksackReorganization
 				$priority += 26;
 			}
 
-			$this->_partOne[] = $priority;
+			$priorities[] = $priority;
 		}
+
+		return array_sum($priorities);
 	}
 
-	private function _partTwo(): void
+	private function _partTwo(array $items): int
 	{
 		$repairedData = [];
 		$tmp = [];
 		$j = 0;
-		foreach ($this->_items as $item) {
+		foreach ($items as $item) {
 			$tmp[] = $item;
 			$j++;
 
@@ -69,6 +73,7 @@ class RucksackReorganization
 			}
 		}
 
+		$priorities = [];
 		foreach ($repairedData as $data) {
 			$string1 = str_split($data[0]);
 			$string2 = str_split($data[1]);
@@ -82,9 +87,10 @@ class RucksackReorganization
 				$priority += 26;
 			}
 
-			$this->_partTwo[] = $priority;
+			$priorities[] = $priority;
 		}
 
+		return array_sum($priorities);
 	}
 }
 new RucksackReorganization();

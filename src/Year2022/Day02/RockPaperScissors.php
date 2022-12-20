@@ -57,39 +57,48 @@ class RockPaperScissors
 		self::SCISSOR_PLAYER_ONE => self::SCISSOR_PLAYER_TWO,
 	];
 
-	private array $_puzzleOne = [];
-	private array $_puzzleTwo = [];
-	private array $_combinations;
-
 	public function __construct()
 	{
-		$this->getArrayFromFile();
+		$combinationsExample = $this->getArrayFromFile('example.txt');
+		$combinations = $this->getArrayFromFile('input.txt');
 
-		$this->_partOne();
-		echo 'Totally Score Part One: ' . array_sum($this->_puzzleOne) . "\n";
+		echo 'Totally Score Part One: ' . $this->_partOne($combinationsExample) . " (example)\n";
+		echo 'Totally Score Part One: ' . $this->_partOne($combinations) . "\n";
 
-		$this->_partTwo();
-		echo 'Totally Score Part Two: ' . array_sum($this->_puzzleTwo) . "\n";
+		echo "\n";
+
+		echo 'Totally Score Part Two: ' . $this->_partTwo($combinationsExample) . " (example)\n";
+		echo 'Totally Score Part Two: ' . $this->_partTwo($combinations) . "\n";
 	}
 
-	public function getArrayFromFile(): void
+	/**
+	 * @param string $filename
+	 * @return array
+	 */
+	public function getArrayFromFile(string $filename): array
 	{
-//		$fileData = $this->getFileData('example.txt');
-		$fileData = $this->getFileData('input.txt');
-
+		$fileData = $this->getFileData($filename);
+		$fileToArray = [];
 		foreach ($fileData as $iValue) {
 			/** @var array $explode */
 			$explode = explode(' ', $iValue);
-			$this->_combinations[] = [
+			$fileToArray[] = [
 				$explode[0],
 				$explode[1],
 			];
 		}
+
+		return $fileToArray;
 	}
 
-	private function _partOne(): void
+	/**
+	 * @param array $combinations
+	 * @return int
+	 */
+	private function _partOne(array $combinations): int
 	{
-		foreach ($this->_combinations as $game) {
+		$scores = [];
+		foreach ($combinations as $game) {
 			$score = self::POINTS[$game[1]];
 
 			if (self::DRAWS[$game[0]] === $game[1]) {
@@ -100,13 +109,19 @@ class RockPaperScissors
 				$score += self::POINTS_LOSE;
 			}
 
-			$this->_puzzleOne[] = $score;
+			$scores[] = $score;
 		}
+		return array_sum($scores);
 	}
 
-	private function _partTwo(): void
+	/**
+	 * @param array $combinations
+	 * @return int
+	 */
+	private function _partTwo(array $combinations): int
 	{
-		foreach ($this->_combinations as $game) {
+		$scores = [];
+		foreach ($combinations as $game) {
 			switch ($game[1]) {
 			    case self::ROCK_PLAYER_TWO: 	//lose x
 					$score = self::POINTS_LOSE;
@@ -125,8 +140,9 @@ class RockPaperScissors
 					break;
 			}
 
-			$this->_puzzleTwo[] = $score;
+			$scores[] = $score;
 		}
+		return array_sum($scores);
 	}
 }
 

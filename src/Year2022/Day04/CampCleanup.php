@@ -17,64 +17,57 @@ class CampCleanup
 
 	public function __construct()
 	{
-		$this->getArrayFromFile();
+		$pairsExample = $this->getArrayFromFile('example.txt');
+		$pairs = $this->getArrayFromFile('input.txt');
 
-		$this->_partOne();
-		echo 'Pairs with one range fully contains: ' . $this->_partOne . "\n";
+		echo 'Pairs with one range fully contains: ' . $this->_partOne($pairsExample) . " (example)\n";
+		echo 'Pairs with one range fully contains: ' . $this->_partOne($pairs) . "\n";
 
-		$this->_partTwo();
-		echo 'Pairs with Overlap range contains: ' . $this->_partTwo . "\n";
+		echo "\n";
+
+		echo 'Pairs with Overlap range contains: ' . $this->_partTwo($pairsExample) . " (example)\n";
+		echo 'Pairs with Overlap range contains: ' . $this->_partTwo($pairs) . "\n";
 	}
 
-	public function getArrayFromFile(): void
+	public function getArrayFromFile(string $filename): array
 	{
-//		$fileData = $this->getFileData('example.txt');
-		$fileData = $this->getFileData('input.txt');
+		$fileData = $this->getFileData($filename);
 
+		$fileToArray = [];
 		foreach ($fileData as $iValue) {
 			/** @var array $explode */
 			$explode = explode(',', $iValue);
-			$this->_pairs[] = [
+			$fileToArray[] = [
 				$explode[0],
 				$explode[1],
 			];
 		}
+
+		return $fileToArray;
 	}
 
-	private function _partOne(): void
+	private function _partOne(array $pairs): int
 	{
-		foreach ($this->_pairs as $pairs) {
-			/** @var array $exp_1 */
-			$exp_1 = explode('-', $pairs[0]);
-			/** @var array $exp_2 */
-			$exp_2 = explode('-', $pairs[1]);
-
-			$little_1 = (int) $exp_1[0];
-			$big_1 = (int) $exp_1[1];
-			$little_2 = (int) $exp_2[0];
-			$big_2 = (int) $exp_2[1];
+		$howManyPairs = 0;
+		foreach ($pairs as $pair) {
+			[$little_1, $big_1, $little_2, $big_2] = self::_splitPairs($pair);
 
 			if (
 				($little_1 >= $little_2 && $big_1 <= $big_2)
 				|| ($little_2 >= $little_1 && $big_2 <= $big_1)
 			) {
-				$this->_partOne++;
+				$howManyPairs++;
 			}
 		}
+
+		return $howManyPairs;
 	}
 
-	private function _partTwo(): void
+	private function _partTwo(array $pairs): int
 	{
-		foreach ($this->_pairs as $pairs) {
-			/** @var array $exp_1 */
-			$exp_1 = explode('-', $pairs[0]);
-			/** @var array $exp_2 */
-			$exp_2 = explode('-', $pairs[1]);
-
-			$little_1 = (int) $exp_1[0];
-			$big_1 = (int) $exp_1[1];
-			$little_2 = (int) $exp_2[0];
-			$big_2 = (int) $exp_2[1];
+		$howManyPairs = 0;
+		foreach ($pairs as $pair) {
+			[$little_1, $big_1, $little_2, $big_2] = self::_splitPairs($pair);
 
 			if (
 				(
@@ -86,9 +79,26 @@ class CampCleanup
 					|| ($big_1 >= $little_2 && $big_1 <= $big_2)
 				)
 			) {
-				$this->_partTwo++;
+				$howManyPairs++;
 			}
 		}
+
+		return $howManyPairs;
+	}
+
+	private static function _splitPairs(array $pairs): array
+	{
+		/** @var array $exp_1 */
+		$exp_1 = explode('-', $pairs[0]);
+		/** @var array $exp_2 */
+		$exp_2 = explode('-', $pairs[1]);
+
+		return [
+			(int) $exp_1[0],
+			(int) $exp_1[1],
+			(int) $exp_2[0],
+			(int) $exp_2[1],
+		];
 	}
 }
 new CampCleanup();
