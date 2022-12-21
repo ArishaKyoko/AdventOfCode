@@ -52,12 +52,8 @@ class SupplyStacks
 		$fileData = $this->getFileData($filename);
 
 		$fileToArray = [];
-		$buildCrates = true;
 		foreach ($fileData as $iValue) {
-			if ($buildCrates) {
-				if ($iValue === '') {
-					$buildCrates = false;
-				}
+			if (!preg_match('/move (?<amount>\d+) from (?<from>\d+) to (?<to>\d+)/', $iValue)) {
 				continue;
 			}
 
@@ -83,7 +79,7 @@ class SupplyStacks
 				unset($crates[$from][count($crates[$from])-1]);
 			}
 
-			// keys neu setzen
+			// reset array indexes
 			foreach ($crates as &$crate) {
 				$crate = array_values($crate);
 			}
@@ -109,9 +105,14 @@ class SupplyStacks
 			[$move, $from, $to] = self::_splitRearrangements($rearrangement);
 
 			//todo
-			array_splice($crates[$from], -1, $move, $crates[$to]);
+			$slice = [];
+			for ($i = 1; $i <= $move; $i++) {
+				$slice[] = $crates[$from][count($crates[$from])-1];
+				array_pop($crates[$from]);
+			}
+			$crates[$to] = array_merge($crates[$to], array_reverse($slice));
 
-			// keys neu setzen
+			// reset array indexes
 			foreach ($crates as &$crate) {
 				$crate = array_values($crate);
 			}
