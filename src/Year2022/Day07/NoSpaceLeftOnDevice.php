@@ -24,8 +24,8 @@ class NoSpaceLeftOnDevice
 		$structureExample = $this->_buildDirStructure($listExample);
 		$structure = $this->_buildDirStructure($list);
 
-		echo 'Sum of total sizes at most 100000: ' . $this->_partOne($structureExample) . " (example)\n";
-		echo 'Sum of total sizes at most 100000: ' . $this->_partOne($structure) . "\n";
+		echo 'Sum of total sizes at most 100000: ' . $this->_partOne($structureExample) . " (example)\n"; // 95.437 right
+		echo 'Sum of total sizes at most 100000: ' . $this->_partOne($structure) . "\n"; // 1.607.821 1.619.017 wrong
 
 		echo "\n";
 
@@ -40,7 +40,9 @@ class NoSpaceLeftOnDevice
 
 	private function _partOne(array $structure): int
 	{
-		$dirSizes = self::_getDirSizes($structure);
+
+		$dirSizes = [];
+		self::_getDirSizes($structure['_/'], $dirSizes, $structure);
 
 		$smallDirs = [];
 		foreach ($dirSizes as $dir => $size) {
@@ -61,6 +63,8 @@ class NoSpaceLeftOnDevice
 	{
 		$structure = [];
 		$currentDir = '';
+		$prevDir = '';
+		$path = [];
 		foreach ($list as $item) {
 			/** @var array $explode */
 			$explode = explode(' ', $item);
@@ -71,69 +75,55 @@ class NoSpaceLeftOnDevice
 
 			if ($explode[1] === self::COMMAND_CD) {
 				if ($explode[2] === self::COMMAND_TOP) {
+					array_pop($path);
+					$pathReverse = array_reverse($path);
+					$prevDir = $pathReverse[1] ?? '';
+					$currentDir = $pathReverse[0];
 					continue;
 				}
 
+				$prevDir = $currentDir;
 				$currentDir = $explode[2];
+				$path[] = $currentDir;
+				continue;
 			}
 
+			$index = $prevDir . '_' . $currentDir;
+
 			if (is_numeric($explode[0])) {
+				// $explode[0] => size | $explode[1] => filename
 				$file = [$explode[1] => (int) $explode[0]];
-				$structure[$currentDir] = empty($structure[$currentDir]) ? $file : array_merge($structure[$currentDir], $file);
+				$structure[$index] = empty($structure[$index]) ? $file : array_merge($structure[$index], $file);
 			}
 
 			if ($explode[0] === self::COMMAND_DIR) {
-				$structure[$currentDir][$explode[1]] = self::COMMAND_DIR;
+				// $explode[0] => "dir" | $explode[1] => dirname
+				$structure[$index][$explode[1]] = self::COMMAND_DIR;
 			}
 		}
 
 		return $structure;
-
-		// not in using, is for nested structure
-//		$structureReverse = array_reverse($structure);
-//		foreach ($structureReverse as &$dir) {
-//			foreach ($dir as $filename => $size) {
-//				if ($size === self::COMMAND_DIR) {
-//					$dir[$filename] = $structureReverse[$filename];
-//				}
-//			}
-//		}
-//		unset($dir);
-//
-//		$structure = array_reverse($structureReverse);
-//		return array_slice($structure, 0, 1);
 	}
 
-	private static function _getDirSizes(array $structure): array
+	private static function _getDirSizes(array $files, array &$dirSize, array $structure, string $dirname = '_/'): void
 	{
-		$dirSizes = [];
-		$tmp = [];
-		foreach (array_reverse($structure) as $dir => $files) {
-			if (!isset($dirSizes[$dir])) {
-				$dirSizes[$dir] = 0;
+		$explode = explode('_', $dirname);
+		$currentDir = $explode[1];
+
+		foreach ($files as $filename => $size) {
+			if (!isset($dirSize[$dirname])) {
+				$dirSize[$dirname] = 0;
 			}
 
-			foreach ($files as $filename => $size) {
-				if ($size === self::COMMAND_DIR) {
-					if (empty($dirSizes[$filename])) {
-						$tmp[$dir][] = $filename;
-						continue;
-					}
-					$dirSizes[$dir] += $dirSizes[$filename];
-					continue;
-				}
-
-				$dirSizes[$dir] += $size;
+			if ($size === self::COMMAND_DIR) {
+				$index = $currentDir . '_' . $filename;
+				self::_getDirSizes($structure[$index], $dirSize, $structure, $index);
+				$dirSize[$dirname] += $dirSize[$index];
+				continue;
 			}
+
+			$dirSize[$dirname] += $size;
 		}
-
-		foreach ($tmp as $tmpDir => $tmpFiles) {
-			foreach ($tmpFiles as $tmpFile) {
-				$dirSizes[$tmpDir] += $dirSizes[$tmpFile];
-			}
-		}
-
-		return array_reverse($dirSizes);
 	}
 }
 new NoSpaceLeftOnDevice();
