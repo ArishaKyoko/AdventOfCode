@@ -17,9 +17,9 @@ class CalorieCounting
 		$elvesExample = $this->getArrayFromFile('example.txt');
 
 		$elvesSumExample = $this->_partOne($elvesExample);
-		echo 'Max Calories Elve: ' . max($elvesSumExample) . " (example)\n";
 		$elvesSum = $this->_partOne($elves);
-		echo 'Max Calories Elve: ' . max($elvesSum) . "\n";
+		self::_output('Max Calories Elve', (string) max($elvesSumExample), true);
+		self::_output('Max Calories Elve', (string) max($elvesSum));
 
 		echo "\n";
 
@@ -50,13 +50,23 @@ class CalorieCounting
 		return $fileToArray;
 	}
 
+	private static function _output(string $text, string $solution, bool $example = false): void
+	{
+		echo sprintf(
+			"%s: %s%s\n",
+			$text,
+			$solution,
+			($example ? ' (example)' : '')
+		);
+	}
+
 	/**
 	 * Sum Calories pro elf
 	 *
 	 * @param array $elves
 	 * @return array
 	 */
-	private function _partOne(array $elves): array
+	private static function _partOne(array $elves): array
 	{
 		$elvesSum = [];
 		foreach ($elves as $elf => $calories) {
@@ -72,7 +82,7 @@ class CalorieCounting
 	 * @param array $elvesSum
 	 * @return array
 	 */
-	private function _partTwo(array $elvesSum): array
+	private static function _partTwo(array $elvesSum): array
 	{
 		$topThreeElvesCalories = [];
 		rsort($elvesSum);
