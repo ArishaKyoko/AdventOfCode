@@ -107,18 +107,29 @@ class NoSpaceLeftOnDevice
 	private static function _getDirSizes(array $structure): array
 	{
 		$dirSizes = [];
+		$tmp = [];
 		foreach (array_reverse($structure) as $dir => $files) {
-			foreach ($files as $filename => $size) {
-				if (empty($dirSizes[$dir])) {
-					$dirSizes[$dir] = 0;
-				}
+			if (!isset($dirSizes[$dir])) {
+				$dirSizes[$dir] = 0;
+			}
 
+			foreach ($files as $filename => $size) {
 				if ($size === self::COMMAND_DIR) {
-					$dirSizes[$dir] += $dirSizes[$filename] ?? 0;	// todo this is not ok
+					if (empty($dirSizes[$filename])) {
+						$tmp[$dir][] = $filename;
+						continue;
+					}
+					$dirSizes[$dir] += $dirSizes[$filename];
 					continue;
 				}
 
 				$dirSizes[$dir] += $size;
+			}
+		}
+
+		foreach ($tmp as $tmpDir => $tmpFiles) {
+			foreach ($tmpFiles as $tmpFile) {
+				$dirSizes[$tmpDir] += $dirSizes[$tmpFile];
 			}
 		}
 
