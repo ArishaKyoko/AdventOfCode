@@ -59,6 +59,11 @@ class RockPaperScissors
 
 	public function __construct()
 	{
+
+	}
+
+	public function output(): void
+	{
 		$combinationsExample = $this->getArrayFromFile('example.txt');
 		$combinations = $this->getArrayFromFile('input.txt');
 
@@ -145,5 +150,3 @@ class RockPaperScissors
 		return array_sum($scores);
 	}
 }
-
-new RockPaperScissors();

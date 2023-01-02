@@ -13,20 +13,7 @@ class CalorieCounting
 
 	public function __construct()
 	{
-		$elves = $this->getArrayFromFile('input.txt');
-		$elvesExample = $this->getArrayFromFile('example.txt');
 
-		$elvesSumExample = $this->_partOne($elvesExample);
-		$elvesSum = $this->_partOne($elves);
-		self::_output('Max Calories Elve', (string) max($elvesSumExample), true);
-		self::_output('Max Calories Elve', (string) max($elvesSum));
-
-		echo "\n";
-
-		$topThreeElvesCaloriesExample = $this->_partTwo($elvesSumExample);
-		echo 'Max three Calories Elves: ' . array_sum($topThreeElvesCaloriesExample) . " (example)\n";
-		$topThreeElvesCalories = $this->_partTwo($elvesSum);
-		echo 'Max three Calories Elves: ' . array_sum($topThreeElvesCalories) . "\n";
 	}
 
 	/**
@@ -50,14 +37,24 @@ class CalorieCounting
 		return $fileToArray;
 	}
 
-	private static function _output(string $text, string $solution, bool $example = false): void
+	public function output(): void
 	{
-		echo sprintf(
-			"%s: %s%s\n",
-			$text,
-			$solution,
-			($example ? ' (example)' : '')
-		);
+		$elves = $this->getArrayFromFile('input.txt');
+		$elvesExample = $this->getArrayFromFile('example.txt');
+
+		$elvesSumExample = $this->_partOne($elvesExample);
+		$elvesSum = $this->_partOne($elves);
+
+		echo 'Max Calories Elve: '. max($elvesSumExample) . " (example)\n";
+		echo 'Max Calories Elve: '. max($elvesSum) . "\n";
+
+		echo "\n";
+
+		$topThreeElvesCaloriesExample = $this->_partTwo($elvesSumExample);
+		$topThreeElvesCalories = $this->_partTwo($elvesSum);
+
+		echo 'Max three Calories Elves: ' . array_sum($topThreeElvesCaloriesExample) . " (example)\n";
+		echo 'Max three Calories Elves: ' . array_sum($topThreeElvesCalories) . "\n";
 	}
 
 	/**
@@ -66,7 +63,7 @@ class CalorieCounting
 	 * @param array $elves
 	 * @return array
 	 */
-	private static function _partOne(array $elves): array
+	public static function _partOne(array $elves): array
 	{
 		$elvesSum = [];
 		foreach ($elves as $elf => $calories) {
@@ -82,7 +79,7 @@ class CalorieCounting
 	 * @param array $elvesSum
 	 * @return array
 	 */
-	private static function _partTwo(array $elvesSum): array
+	public static function _partTwo(array $elvesSum): array
 	{
 		$topThreeElvesCalories = [];
 		rsort($elvesSum);
@@ -92,4 +89,3 @@ class CalorieCounting
 		return $topThreeElvesCalories;
 	}
 }
-new CalorieCounting();

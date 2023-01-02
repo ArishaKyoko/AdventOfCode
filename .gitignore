@@ -5,3 +5,4 @@
 /bin/php-cs-fixer.phar
 /bin/phpstan.phar
 /bin/phpunit.phar
+/.phpunit.result.cache
