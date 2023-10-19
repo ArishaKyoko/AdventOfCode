@@ -3,14 +3,10 @@ declare(strict_types=1);
 
 namespace AoC\Year2022\Day03;
 
-use AoC\Traits\CanReadFiles;
+use AoC\Base;
 
-require '../../../vendor/autoload.php';
-
-class RucksackReorganization
+class RucksackReorganization extends Base
 {
-	use CanReadFiles;
-
 	private const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 
 	public function __construct()

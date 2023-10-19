@@ -6,3 +6,4 @@
 /bin/phpstan.phar
 /bin/phpunit.phar
 /.phpunit.result.cache
+/.idea/

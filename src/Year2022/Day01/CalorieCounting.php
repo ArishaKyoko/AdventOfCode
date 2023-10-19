@@ -3,13 +3,10 @@ declare(strict_types=1);
 
 namespace AoC\Year2022\Day01;
 
-use AoC\Traits\CanReadFiles;
+use AoC\Base;
 
-require '../../../vendor/autoload.php';
-
-class CalorieCounting
+class CalorieCounting extends Base
 {
-	use CanReadFiles;
 
 	public function __construct()
 	{

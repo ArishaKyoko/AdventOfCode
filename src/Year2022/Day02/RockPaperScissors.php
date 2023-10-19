@@ -3,14 +3,10 @@ declare(strict_types=1);
 
 namespace AoC\Year2022\Day02;
 
-use AoC\Traits\CanReadFiles;
+use AoC\Base;
 
-require '../../../vendor/autoload.php';
-
-class RockPaperScissors
+class RockPaperScissors extends Base
 {
-	use CanReadFiles;
-
 	private const ROCK_PLAYER_ONE = 'A';
 	private const PAPER_PLAYER_ONE = 'B';
 	private const SCISSOR_PLAYER_ONE = 'C';
