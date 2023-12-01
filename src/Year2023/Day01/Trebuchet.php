@@ -16,7 +16,7 @@ class Trebuchet extends Base
     public function output(): void
     {
         echo 'Output Part One: ' . array_sum($this->partOne());
-        echo "\n\n";
+        echo "\n";
         echo 'Output Part Two: ' . array_sum($this->partTwo());
     }
 
@@ -26,8 +26,8 @@ class Trebuchet extends Base
 
         foreach ($this->fileArray as $string) {
             $pregResult = [];
-            if (preg_match_all('/\d/', $string, $pregResult, PREG_SET_ORDER)) {
-                $digitPairs[] = (int) ($pregResult[0][0] . $pregResult[count($pregResult)-1][0]);
+            if (preg_match_all('/\d/', $string, $pregResult)) {
+                $digitPairs[] = (int) ($pregResult[0][0] . $pregResult[0][count($pregResult[0])-1]);
             }
         }
 
@@ -53,8 +53,8 @@ class Trebuchet extends Base
 
         foreach ($this->fileArray as $string) {
             $pregResult = [];
-            if (preg_match_all('/((' . implode('|', array_keys($numbersInWords)) . ')|\d)/', $string, $pregResult, PREG_SET_ORDER)) {
-                $digitPairs[] = (int) (($numbersInWords[$pregResult[0][0]] ?? $pregResult[0][0]) . ($numbersInWords[$pregResult[count($pregResult)-1][0]] ?? $pregResult[count($pregResult)-1][0]));
+            if (preg_match_all('/((' . implode('|', array_keys($numbersInWords)) . ')|\d)/', $string, $pregResult)) {
+                $digitPairs[] = (int) (($numbersInWords[$pregResult[0][0]] ?? $pregResult[0][0]) . ($numbersInWords[$pregResult[0][count($pregResult[0])-1]] ?? $pregResult[0][count($pregResult[0])-1]));
             }
         }
 
