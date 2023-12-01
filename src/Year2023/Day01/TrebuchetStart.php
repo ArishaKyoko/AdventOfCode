@@ -3,17 +3,19 @@ declare(strict_types=1);
 
 namespace AoC\Year2023\Day01;
 
+use AoC\Enums\Files;
+
 require '../../../vendor/autoload.php';
 
-$trebuchetExampleOne = new Trebuchet('example_one.txt');
-$trebuchetExampleOne->output();
+$example1 = new Trebuchet(Files::EXAMPLE_ONE);
+$example1->output();
 
-echo "\n\n";
+echo PHP_EOL . PHP_EOL;
 
-$trebuchetExampleTwo = new Trebuchet('example_two.txt');
-$trebuchetExampleTwo->output();
+$example2 = new Trebuchet(Files::EXAMPLE_TWO);
+$example2->output();
 
-echo "\n\n";
+echo PHP_EOL . PHP_EOL;
 
-$trebuchet = new Trebuchet('input.txt');
-$trebuchet->output();
+$input = new Trebuchet(Files::INPUT);
+$input->output();

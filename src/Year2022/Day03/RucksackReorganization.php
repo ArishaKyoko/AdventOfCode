@@ -4,38 +4,36 @@ declare(strict_types=1);
 namespace AoC\Year2022\Day03;
 
 use AoC\Base;
+use AoC\Enums\Files;
 
 class RucksackReorganization extends Base
 {
 	private const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 
-	public function __construct()
-	{
-		$itemsExample = $this->getArrayFromFile('example.txt');
-		$items = $this->getArrayFromFile('input.txt');
+    protected static string $year = 'Year2022';
+    protected static string $day = 'Day03';
 
-		echo 'Sum of Priorities Part One: ' . $this->_partOne($itemsExample) . " (example)\n";
-		echo 'Sum of Priorities Part One: ' . $this->_partOne($items) . "\n";
+    public function __construct(Files $filename)
+    {
+        $this->setFile($filename);
+        $this->getArrayFromFile();
+    }
 
-		echo "\n";
-
-		echo 'Sum of Priorities Part One: ' . $this->_partTwo($itemsExample) . " (example)\n";
-		echo 'Sum of Priorities Part One: ' . $this->_partTwo($items) . "\n";
-	}
-
-	public function getArrayFromFile(string $filename): array
-	{
-		return $this->getFileData($filename);
-	}
+    public function output(): void
+    {
+        echo 'Output Part One: ' . $this->partOne();
+        echo PHP_EOL;
+        echo 'Output Part Two: ' . $this->partTwo();
+    }
 
 	/**
 	 * @param array $items
 	 * @return int
 	 */
-	private function _partOne(array $items): int
+	public function partOne(): int
 	{
 		$priorities = [];
-		foreach ($items as $item) {
+		foreach ($this->fileArray as $item) {
 			$count = strlen($item);
 			$string1 = str_split(substr($item, 0, ($count/2)));
 			$string2 = str_split(substr($item, ($count/2)));
@@ -53,12 +51,12 @@ class RucksackReorganization extends Base
 		return array_sum($priorities);
 	}
 
-	private function _partTwo(array $items): int
+	public function partTwo(): int
 	{
 		$repairedData = [];
 		$tmp = [];
 		$j = 0;
-		foreach ($items as $item) {
+		foreach ($this->fileArray as $item) {
 			$tmp[] = $item;
 			$j++;
 
@@ -89,4 +87,3 @@ class RucksackReorganization extends Base
 		return array_sum($priorities);
 	}
 }
-new RucksackReorganization();

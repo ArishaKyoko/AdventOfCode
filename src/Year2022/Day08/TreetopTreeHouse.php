@@ -3,42 +3,38 @@ declare(strict_types=1);
 
 namespace AoC\Year2022\Day08;
 
-use AoC\Traits\CanReadFiles;
+use AoC\Base;
+use AoC\Enums\Files;
 
-require '../../../vendor/autoload.php';
-
-class TreetopTreeHouse
+class TreetopTreeHouse extends Base
 {
-	use CanReadFiles;
+    protected static string $year = 'Year2022';
+    protected static string $day = 'Day08';
 
 	private array $_items = [];
 	private array $_partOne = [];
 	private array $_partTwo = [];
-    
-    public function __construct()
-	{
-		$this->getArrayFromFile();
 
-		$this->_partOne();
-		echo '';
+    public function __construct(Files $filename)
+    {
+        $this->setFile($filename);
+        $this->getArrayFromFile();
+    }
 
-		$this->_partTwo();
-		echo '';
-	}
-    
-    private function getArrayFromFile(): void
+    public function output(): void
+    {
+        echo 'Output Part One: ' . $this->partOne();
+        echo PHP_EOL;
+        echo 'Output Part Two: ' . $this->partTwo();
+    }
+	
+	public function partOne(): void
 	{
 
 	}
 	
-	private function _partOne(): void
-	{
-
-	}
-	
-	private function _partTwo(): void
+	public function partTwo(): void
 	{
 
 	}
 }
-new TreetopTreeHouse();

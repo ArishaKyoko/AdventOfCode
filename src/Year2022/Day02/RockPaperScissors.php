@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace AoC\Year2022\Day02;
 
 use AoC\Base;
+use AoC\Enums\Files;
 
 class RockPaperScissors extends Base
 {
@@ -53,32 +54,25 @@ class RockPaperScissors extends Base
 		self::SCISSOR_PLAYER_ONE => self::SCISSOR_PLAYER_TWO,
 	];
 
-	public function __construct()
-	{
+    protected static string $year = 'Year2022';
+    protected static string $day = 'Day02';
 
+	public function __construct(Files $filename)
+	{
+        $this->setFile($filename);
+        $this->getArrayFromFile();
 	}
 
-	public function output(): void
+    public function output(): void
+    {
+        echo 'Output Part One: ' . $this->partOne();
+        echo PHP_EOL;
+        echo 'Output Part Two: ' . $this->partTwo();
+    }
+
+	public function getArrayFromFile(): void
 	{
-		$combinationsExample = $this->getArrayFromFile('example.txt');
-		$combinations = $this->getArrayFromFile('input.txt');
-
-		echo 'Totally Score Part One: ' . $this->_partOne($combinationsExample) . " (example)\n";
-		echo 'Totally Score Part One: ' . $this->_partOne($combinations) . "\n";
-
-		echo "\n";
-
-		echo 'Totally Score Part Two: ' . $this->_partTwo($combinationsExample) . " (example)\n";
-		echo 'Totally Score Part Two: ' . $this->_partTwo($combinations) . "\n";
-	}
-
-	/**
-	 * @param string $filename
-	 * @return array
-	 */
-	public function getArrayFromFile(string $filename): array
-	{
-		$fileData = $this->getFileData($filename);
+		$fileData = $this->getFileData();
 		$fileToArray = [];
 		foreach ($fileData as $iValue) {
 			/** @var array $explode */
@@ -89,17 +83,16 @@ class RockPaperScissors extends Base
 			];
 		}
 
-		return $fileToArray;
+		$this->fileArray = $fileToArray;
 	}
 
-	/**
-	 * @param array $combinations
-	 * @return int
-	 */
-	private function _partOne(array $combinations): int
+    /**
+     * @return int
+     */
+	public function partOne(): int
 	{
 		$scores = [];
-		foreach ($combinations as $game) {
+		foreach ($this->fileArray as $game) {
 			$score = self::POINTS[$game[1]];
 
 			if (self::DRAWS[$game[0]] === $game[1]) {
@@ -115,14 +108,13 @@ class RockPaperScissors extends Base
 		return array_sum($scores);
 	}
 
-	/**
-	 * @param array $combinations
-	 * @return int
-	 */
-	private function _partTwo(array $combinations): int
+    /**
+     * @return int
+     */
+	public function partTwo(): int
 	{
 		$scores = [];
-		foreach ($combinations as $game) {
+		foreach ($this->fileArray as $game) {
 			switch ($game[1]) {
 			    case self::ROCK_PLAYER_TWO: 	//lose x
 					$score = self::POINTS_LOSE;

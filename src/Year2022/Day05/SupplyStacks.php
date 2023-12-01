@@ -3,53 +3,53 @@ declare(strict_types=1);
 
 namespace AoC\Year2022\Day05;
 
-use AoC\Traits\CanReadFiles;
+use AoC\Base;
+use AoC\Enums\ExampleSwitch;
+use AoC\Enums\Files;
 
-require '../../../vendor/autoload.php';
-
-class SupplyStacks
+class SupplyStacks extends Base
 {
-	use CanReadFiles;
-
-	private array $_cratesExample = [
-		1 => ['Z', 'N'],
-		2 => ['M', 'C', 'D'],
-		3 => ['P'],
-	];
+    protected static string $year = 'Year2022';
+    protected static string $day = 'Day05';
 
 	private array $_crates = [
-		1 => ['Z', 'J', 'G'],
-		2 => ['Q', 'L', 'R', 'P', 'W', 'F', 'V', 'C'],
-		3 => ['F', 'P', 'M', 'C', 'L', 'G', 'R'],
-		4 => ['L', 'F', 'B', 'W', 'P', 'H', 'M'],
-		5 => ['G', 'C', 'F', 'S', 'V', 'Q'],
-		6 => ['W', 'H', 'J', 'Z', 'M', 'Q', 'T', 'L'],
-		7 => ['H', 'F', 'S', 'B', 'V'],
-		8 => ['F', 'J', 'Z', 'S'],
-		9 => ['M', 'C', 'D', 'P', 'F', 'H', 'B', 'T'],
-	];
+        [
+            1 => ['Z', 'J', 'G'],
+            2 => ['Q', 'L', 'R', 'P', 'W', 'F', 'V', 'C'],
+            3 => ['F', 'P', 'M', 'C', 'L', 'G', 'R'],
+            4 => ['L', 'F', 'B', 'W', 'P', 'H', 'M'],
+            5 => ['G', 'C', 'F', 'S', 'V', 'Q'],
+            6 => ['W', 'H', 'J', 'Z', 'M', 'Q', 'T', 'L'],
+            7 => ['H', 'F', 'S', 'B', 'V'],
+            8 => ['F', 'J', 'Z', 'S'],
+            9 => ['M', 'C', 'D', 'P', 'F', 'H', 'B', 'T'],
+        ],
+        [
+            1 => ['Z', 'N'],
+            2 => ['M', 'C', 'D'],
+            3 => ['P'],
+        ]
+    ];
 
-	public function __construct()
-	{
-		$rearrangementExample = $this->getArrayFromFile('example.txt');
-		$rearrangement = $this->getArrayFromFile('input.txt');
+    private ExampleSwitch $modus;
 
-		echo 'Crates end up top of stack: ' . $this->_partOne($rearrangementExample, $this->_cratesExample) . " (example)\n";
-		echo 'Crates end up top of stack: ' . $this->_partOne($rearrangement, $this->_crates) . "\n";
+    public function __construct(Files $filename, ExampleSwitch $modus)
+    {
+        $this->modus = $modus;
+        $this->setFile($filename);
+        $this->getArrayFromFile();
+    }
 
-		echo "\n";
+    public function output(): void
+    {
+        echo 'Output Part One: ' . $this->partOne();
+        echo PHP_EOL;
+        echo 'Output Part Two: ' . $this->partTwo();
+    }
 
-		echo 'Crates end up top of stack: ' . $this->_partTwo($rearrangementExample, $this->_cratesExample) . " (example)\n";
-		echo 'Crates end up top of stack: ' . $this->_partTwo($rearrangement, $this->_crates) . "\n";
-	}
-
-	/**
-	 * @param string $filename
-	 * @return array
-	 */
-	public function getArrayFromFile(string $filename): array
-	{
-		$fileData = $this->getFileData($filename);
+	public function getArrayFromFile(): void
+    {
+        $fileData = $this->getFileData();
 
 		$fileToArray = [];
 		foreach ($fileData as $iValue) {
@@ -60,17 +60,16 @@ class SupplyStacks
 			$fileToArray[] = $iValue;
 		}
 
-		return $fileToArray;
+		$this->fileArray = $fileToArray;
 	}
 
-	/**
-	 * @param array $rearrangements
-	 * @param array $crates
-	 * @return string
-	 */
-	private function _partOne(array $rearrangements, array $crates): string
+    /**
+     * @return string
+     */
+	public function partOne(): string
 	{
-		foreach ($rearrangements as $rearrangement) {
+        $crates = $this->_crates[$this->modus->value];
+		foreach ($this->fileArray as $rearrangement) {
 			[$move, $from, $to] = self::_splitRearrangements($rearrangement);
 
 			for ($i = 1; $i <= $move; $i++) {
@@ -94,14 +93,13 @@ class SupplyStacks
 		return implode('', $endsUp);
 	}
 
-	/**
-	 * @param array $rearrangements
-	 * @param array $crates
-	 * @return string
-	 */
-	private function _partTwo(array $rearrangements, array $crates): string
+    /**
+     * @return string
+     */
+	public function partTwo(): string
 	{
-		foreach ($rearrangements as $rearrangement) {
+        $crates = $this->_crates[$this->modus->value];
+		foreach ($this->fileArray as $rearrangement) {
 			[$move, $from, $to] = self::_splitRearrangements($rearrangement);
 
 			//todo
@@ -142,4 +140,3 @@ class SupplyStacks
 		];
 	}
 }
-new SupplyStacks();

@@ -4,23 +4,27 @@ declare(strict_types=1);
 namespace AoC\Year2023\Day01;
 
 use AoC\Base;
+use AoC\Enums\Files;
 
 class Trebuchet extends Base
 {
+    protected static string $year = 'Year2023';
+    protected static string $day = 'Day01';
 
-    public function __construct(string $filename)
+    public function __construct(Files $filename)
     {
-        $this->getArrayFromFile($filename);
+        $this->setFile($filename);
+        $this->getArrayFromFile();
     }
 
     public function output(): void
     {
-        echo 'Output Part One: ' . array_sum($this->partOne());
-        echo "\n";
-        echo 'Output Part Two: ' . array_sum($this->partTwo());
+        echo 'Output Part One: ' . $this->partOne();
+        echo PHP_EOL;
+        echo 'Output Part Two: ' . $this->partTwo();
     }
 
-    public function partOne(): array
+    public function partOne(): int
     {
         $digitPairs = [];
 
@@ -31,10 +35,10 @@ class Trebuchet extends Base
             }
         }
 
-        return $digitPairs;
+        return array_sum($digitPairs);
     }
 
-    public function partTwo(): array
+    public function partTwo(): int
     {
         $digitPairs = [];
 
@@ -50,7 +54,6 @@ class Trebuchet extends Base
             'nine' => 9,
         ];
 
-
         foreach ($this->fileArray as $string) {
             $pregResult = [];
             if (preg_match_all('/((' . implode('|', array_keys($numbersInWords)) . ')|\d)/', $string, $pregResult)) {
@@ -58,8 +61,6 @@ class Trebuchet extends Base
             }
         }
 
-
-
-        return $digitPairs;
+        return array_sum($digitPairs);
     }
 }

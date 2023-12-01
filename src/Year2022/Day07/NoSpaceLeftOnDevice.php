@@ -3,44 +3,35 @@ declare(strict_types=1);
 
 namespace AoC\Year2022\Day07;
 
-use AoC\Traits\CanReadFiles;
+use AoC\Base;
+use AoC\Enums\Files;
 
-require '../../../vendor/autoload.php';
-
-class NoSpaceLeftOnDevice
+class NoSpaceLeftOnDevice extends Base
 {
-	use CanReadFiles;
-
 	private const COMMAND_CD = 'cd';
 	private const COMMAND_TOP = '..';
 	private const COMMAND_LS = 'ls';
 	private const COMMAND_DIR = 'dir';
-    
-    public function __construct()
+
+    protected static string $year = 'Year2022';
+    protected static string $day = 'Day07';
+
+    public function __construct(Files $filename)
+    {
+        $this->setFile($filename);
+        $this->getArrayFromFile();
+    }
+
+    public function output(): void
+    {
+        echo 'Output Part One: ' . $this->partOne();
+        echo PHP_EOL;
+        echo 'Output Part Two: ' . $this->partTwo();
+    }
+
+	public function partOne(): int
 	{
-		$listExample = $this->getArrayFromFile('example.txt');
-		$list = $this->getArrayFromFile('input.txt');
-
-		$structureExample = $this->_buildDirStructure($listExample);
-		$structure = $this->_buildDirStructure($list);
-
-		echo 'Sum of total sizes at most 100000: ' . $this->_partOne($structureExample) . " (example)\n"; // 95.437 right
-		echo 'Sum of total sizes at most 100000: ' . $this->_partOne($structure) . "\n"; // 1.607.821 1.619.017 wrong
-
-		echo "\n";
-
-//		$this->_partTwo();
-//		echo '';
-	}
-    
-    private function getArrayFromFile(string $filename): array
-	{
-		return $this->getFileData($filename);
-	}
-
-	private function _partOne(array $structure): int
-	{
-
+        $structure = self::_buildDirStructure($this->fileArray);
 		$dirSizes = [];
 		self::_getDirSizes($structure['_/'], $dirSizes, $structure);
 
@@ -54,7 +45,7 @@ class NoSpaceLeftOnDevice
 		return array_sum($smallDirs);
 	}
 
-	private function _partTwo(array $structure): void
+	public function partTwo(): void
 	{
 
 	}
@@ -126,4 +117,3 @@ class NoSpaceLeftOnDevice
 		}
 	}
 }
-new NoSpaceLeftOnDevice();

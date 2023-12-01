@@ -5,9 +5,9 @@ namespace AoC\Traits;
 
 Trait CanReadFiles
 {
-	public function getFileData(string $filename): array
+	public function getFileData(): array
 	{
-		$fileData = file($filename, FILE_IGNORE_NEW_LINES);
+		$fileData = file($this->file, FILE_IGNORE_NEW_LINES);
 
 		if (!is_array($fileData)) {
 			return [];

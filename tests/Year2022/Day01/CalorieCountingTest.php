@@ -3,30 +3,22 @@ declare(strict_types=1);
 
 namespace AoCTest\Year2022\Day01;
 
+use AoC\Enums\Files;
 use AoC\Year2022\Day01\CalorieCounting;
 use PHPUnit\Framework\TestCase;
 
-require '../../../vendor/autoload.php';
+require __DIR__ . '/../../../vendor/autoload.php';
 
 class CalorieCountingTest extends TestCase
 {
 	public function test(): void
 	{
-		$calorieCounting = new CalorieCounting();
+		$example = new CalorieCounting(Files::EXAMPLE);
+		$this->assertEquals(24000, $example->partOne());
+		$this->assertEquals(45000, $example->partTwo());
 
-		$elves = $calorieCounting->getArrayFromFile('../../../src/Year2022/Day01/input.txt');
-		$elvesExample = $calorieCounting->getArrayFromFile('../../../src/Year2022/Day01/example.txt');
-
-		$elvesSumExample = $calorieCounting->_partOne($elvesExample);
-		$elvesSum = $calorieCounting->_partOne($elves);
-
-		$this->assertEquals(max($elvesSumExample), 24000);
-		$this->assertEquals(max($elvesSum), 70374);
-
-		$topThreeElvesCaloriesExample = $calorieCounting->_partTwo($elvesSumExample);
-		$topThreeElvesCalories = $calorieCounting->_partTwo($elvesSum);
-
-		$this->assertEquals(array_sum($topThreeElvesCaloriesExample), 45000);
-		$this->assertEquals(array_sum($topThreeElvesCalories), 204610);
+        $input = new CalorieCounting(Files::INPUT);
+        $this->assertEquals(70374, $input->partOne());
+        $this->assertEquals(204610, $input->partTwo());
 	}
 }

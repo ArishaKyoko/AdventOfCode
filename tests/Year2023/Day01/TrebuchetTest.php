@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace AoCTest\Year2023\Day01;
 
+use AoC\Enums\Files;
 use AoC\Year2023\Day01\Trebuchet;
 use PHPUnit\Framework\TestCase;
 
@@ -12,22 +13,15 @@ class TrebuchetTest extends TestCase
 {
     public function test()
     {
-        $trebuchetExampleOne = new Trebuchet('../../../src/Year2023/Day01/example_one.txt');
-        $partOneExample = $trebuchetExampleOne->partOne();
-        $this->assertEquals(142, array_sum($partOneExample));
+        $example1 = new Trebuchet(Files::EXAMPLE_ONE);
+        $this->assertEquals(142, $example1->partOne());
 
-        $trebuchetExampleTwo = new Trebuchet('../../../src/Year2023/Day01/example_two.txt');
-        $partTwoExample = $trebuchetExampleTwo->partTwo();
-        $this->assertEquals(281, array_sum($partTwoExample));
+        $example2 = new Trebuchet(Files::EXAMPLE_TWO);
+        $this->assertEquals(281, $example2->partTwo());
 
-
-        $trebuchet = new Trebuchet('../../../src/Year2023/Day01/input.txt');
-
-        $partOne = $trebuchet->partOne();
-        $this->assertEquals(53334, array_sum($partOne));
-
-        $partTwo = $trebuchet->partTwo();
-        $this->assertEquals(52834, array_sum($partTwo));
+        $input = new Trebuchet(Files::INPUT);
+        $this->assertEquals(53334, $input->partOne());
+        $this->assertEquals(52834, $input->partTwo());
     }
 
 }

@@ -3,35 +3,27 @@ declare(strict_types=1);
 
 namespace AoC\Year2022\Day04;
 
-use AoC\Traits\CanReadFiles;
+use AoC\Base;
+use AoC\Enums\Files;
 
-require '../../../vendor/autoload.php';
-
-class CampCleanup
+class CampCleanup extends Base
 {
-	use CanReadFiles;
+    protected static string $year = 'Year2022';
+    protected static string $day = 'Day04';
 
 	private array $_pairs;
 	private int $_partOne = 0;
 	private int $_partTwo = 0;
 
-	public function __construct()
-	{
-		$pairsExample = $this->getArrayFromFile('example.txt');
-		$pairs = $this->getArrayFromFile('input.txt');
+    public function __construct(Files $filename)
+    {
+        $this->setFile($filename);
+        $this->getArrayFromFile();
+    }
 
-		echo 'Pairs with one range fully contains: ' . $this->_partOne($pairsExample) . " (example)\n";
-		echo 'Pairs with one range fully contains: ' . $this->_partOne($pairs) . "\n";
-
-		echo "\n";
-
-		echo 'Pairs with Overlap range contains: ' . $this->_partTwo($pairsExample) . " (example)\n";
-		echo 'Pairs with Overlap range contains: ' . $this->_partTwo($pairs) . "\n";
-	}
-
-	public function getArrayFromFile(string $filename): array
-	{
-		$fileData = $this->getFileData($filename);
+	public function getArrayFromFile(): void
+    {
+		$fileData = $this->getFileData();
 
 		$fileToArray = [];
 		foreach ($fileData as $iValue) {
@@ -43,13 +35,20 @@ class CampCleanup
 			];
 		}
 
-		return $fileToArray;
+		$this->fileArray = $fileToArray;
 	}
 
-	private function _partOne(array $pairs): int
+    public function output(): void
+    {
+        echo 'Output Part One: ' . $this->partOne();
+        echo PHP_EOL;
+        echo 'Output Part Two: ' . $this->partTwo();
+    }
+
+	public function partOne(): int
 	{
 		$howManyPairs = 0;
-		foreach ($pairs as $pair) {
+		foreach ($this->fileArray as $pair) {
 			[$little_1, $big_1, $little_2, $big_2] = self::_splitPairs($pair);
 
 			if (
@@ -63,10 +62,10 @@ class CampCleanup
 		return $howManyPairs;
 	}
 
-	private function _partTwo(array $pairs): int
+	public function partTwo(): int
 	{
 		$howManyPairs = 0;
-		foreach ($pairs as $pair) {
+		foreach ($this->fileArray as $pair) {
 			[$little_1, $big_1, $little_2, $big_2] = self::_splitPairs($pair);
 
 			if (
@@ -101,4 +100,3 @@ class CampCleanup
 		];
 	}
 }
-new CampCleanup();

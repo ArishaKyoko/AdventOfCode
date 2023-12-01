@@ -3,35 +3,30 @@ declare(strict_types=1);
 
 namespace AoC\Year2022\Day21;
 
-use AoC\Traits\CanReadFiles;
+use AoC\Base;
+use AoC\Enums\Files;
 
-require '../../../vendor/autoload.php';
-
-class MonkeyMath
+class MonkeyMath extends Base
 {
-	use CanReadFiles;
-    
-    public function __construct()
-	{
-		$monkeysExample = $this->getArrayFromFile('example.txt');
-		$monkeys = $this->getArrayFromFile('input.txt');
+    protected static string $year = 'Year2022';
+    protected static string $day = 'Day21';
 
-		echo 'The Number of Root: ' . $this->_partOne($monkeysExample) . " (example)\n";
-		echo 'The Number of Root: ' . $this->_partOne($monkeys) . "\n";
+    public function __construct(Files $filename)
+    {
+        $this->setFile($filename);
+        $this->getArrayFromFile();
+    }
 
-		echo "\n";
+    public function output(): void
+    {
+        echo 'Output Part One: ' . $this->partOne();
+        echo PHP_EOL;
+        echo 'Output Part Two: ' . $this->partTwo();
+    }
 
-		echo 'The Number of Root: ' . $this->_partTwo($monkeysExample) . " (example)\n";
-		echo 'The Number of Root: ' . $this->_partTwo($monkeys) . "\n";
-	}
-
-	/**
-	 * @param string $filename
-	 * @return array
-	 */
-    private function getArrayFromFile(string $filename): array
-	{
-		$fileData = $this->getFileData($filename);
+    public function getArrayFromFile(): void
+    {
+		$fileData = $this->getFileData();
 
 		$_monkeys = [];
 		foreach ($fileData as $monkey) {
@@ -52,19 +47,18 @@ class MonkeyMath
 			}
 		}
 
-		return $_monkeys;
+		$this->fileArray = $_monkeys;
 	}
 
-	/**
-	 * @param array $monkeys
-	 * @return int
-	 */
-	private function _partOne(array $monkeys): int
+    /**
+     * @return int
+     */
+	public function partOne(): int
 	{
-		return $this->_calculate($monkeys['root'], $monkeys);
+		return $this->_calculate($this->fileArray['root'], $this->fileArray);
 	}
 	
-	private function _partTwo(array $monkeys): void
+	public function partTwo(): void
 	{
 
 	}
@@ -99,4 +93,3 @@ class MonkeyMath
 		return $result;
 	}
 }
-new MonkeyMath();

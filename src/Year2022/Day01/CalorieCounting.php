@@ -4,22 +4,24 @@ declare(strict_types=1);
 namespace AoC\Year2022\Day01;
 
 use AoC\Base;
+use AoC\Enums\Files;
 
 class CalorieCounting extends Base
 {
+    protected static string $year = 'Year2022';
+    protected static string $day = 'Day01';
+    private array $elvesSum = [];
 
-	public function __construct()
+	public function __construct(Files $filename)
 	{
-
+        $this->setFile($filename);
+        $this->getArrayFromFile();
 	}
 
-	/**
-	 * @param string $filename
-	 * @return array
-	 */
-	public function getArrayFromFile(string $filename): array
+
+	public function getArrayFromFile(): void
 	{
-		$fileData = $this->getFileData($filename);
+		$fileData = $this->getFileData();
 
 		$fileToArray = [];
 		$j = 0;
@@ -31,58 +33,45 @@ class CalorieCounting extends Base
 			$j++;
 		}
 
-		return $fileToArray;
+		$this->fileArray = $fileToArray;
 	}
 
-	public function output(): void
-	{
-		$elves = $this->getArrayFromFile('input.txt');
-		$elvesExample = $this->getArrayFromFile('example.txt');
+    public function output(): void
+    {
+        echo 'Output Part One: ' . $this->partOne();
+        echo PHP_EOL;
+        echo 'Output Part Two: ' . $this->partTwo();
+    }
 
-		$elvesSumExample = $this->_partOne($elvesExample);
-		$elvesSum = $this->_partOne($elves);
-
-		echo 'Max Calories Elve: '. max($elvesSumExample) . " (example)\n";
-		echo 'Max Calories Elve: '. max($elvesSum) . "\n";
-
-		echo "\n";
-
-		$topThreeElvesCaloriesExample = $this->_partTwo($elvesSumExample);
-		$topThreeElvesCalories = $this->_partTwo($elvesSum);
-
-		echo 'Max three Calories Elves: ' . array_sum($topThreeElvesCaloriesExample) . " (example)\n";
-		echo 'Max three Calories Elves: ' . array_sum($topThreeElvesCalories) . "\n";
-	}
-
-	/**
-	 * Sum Calories pro elf
-	 *
-	 * @param array $elves
-	 * @return array
-	 */
-	public static function _partOne(array $elves): array
+    /**
+     * Sum Calories pro elf
+     *
+     * @return int
+     */
+	public function partOne(): int
 	{
 		$elvesSum = [];
-		foreach ($elves as $elf => $calories) {
+		foreach ($this->fileArray as $elf => $calories) {
 			$elvesSum[$elf] = array_sum($calories);
 		}
 
-		return $elvesSum;
+        $this->elvesSum = $elvesSum;
+
+		return max($elvesSum);
 	}
 
-	/**
-	 * Sum of Calories of top three elves
-	 *
-	 * @param array $elvesSum
-	 * @return array
-	 */
-	public static function _partTwo(array $elvesSum): array
+    /**
+     * Sum of Calories of top three elves
+     *
+     * @return int
+     */
+	public function partTwo(): int
 	{
 		$topThreeElvesCalories = [];
-		rsort($elvesSum);
+		rsort($this->elvesSum);
 		for ($i = 0; $i < 3; $i++) {
-			$topThreeElvesCalories[] = $elvesSum[$i];
+			$topThreeElvesCalories[] = $this->elvesSum[$i];
 		}
-		return $topThreeElvesCalories;
+		return array_sum($topThreeElvesCalories);
 	}
 }

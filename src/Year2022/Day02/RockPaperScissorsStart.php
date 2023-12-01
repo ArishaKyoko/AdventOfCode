@@ -3,7 +3,14 @@ declare(strict_types=1);
 
 namespace AoC\Year2022\Day02;
 
+use AoC\Enums\Files;
+
 require '../../../vendor/autoload.php';
 
-$rockPaperScissors = new RockPaperScissors();
-$rockPaperScissors->output();
+$example = new RockPaperScissors(Files::EXAMPLE);
+$example->output();
+
+echo PHP_EOL . PHP_EOL;
+
+$input = new RockPaperScissors(Files::INPUT);
+$input->output();
