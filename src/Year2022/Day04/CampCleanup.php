@@ -8,17 +8,14 @@ use AoC\Enums\Files;
 
 class CampCleanup extends Base
 {
-    protected static string $year = 'Year2022';
-    protected static string $day = 'Day04';
-
 	private array $_pairs;
 	private int $_partOne = 0;
 	private int $_partTwo = 0;
 
     public function __construct(Files $filename)
     {
-        $this->setFile($filename);
-        $this->getArrayFromFile();
+        $this->setDayAndYear(__NAMESPACE__);
+        parent::__construct($filename);
     }
 
 	public function getArrayFromFile(): void

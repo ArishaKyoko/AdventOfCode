@@ -8,17 +8,10 @@ use AoC\Enums\Files;
 
 class TreetopTreeHouse extends Base
 {
-    protected static string $year = 'Year2022';
-    protected static string $day = 'Day08';
-
-	private array $_items = [];
-	private array $_partOne = [];
-	private array $_partTwo = [];
-
     public function __construct(Files $filename)
     {
-        $this->setFile($filename);
-        $this->getArrayFromFile();
+        $this->setDayAndYear(__NAMESPACE__);
+        parent::__construct($filename);
     }
 
     public function output(): void

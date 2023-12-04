@@ -5,17 +5,23 @@ namespace AoC;
 
 use AoC\Enums\Files;
 use AoC\Traits\CanReadFiles;
+use AoC\Traits\CanSetYearAndDate;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 class Base
 {
 	use CanReadFiles;
+    use CanSetYearAndDate;
 
     protected array $fileArray = [];
     protected string $file = '';
-    protected static string $year = '';
-    protected static string $day = '';
+
+    public function __construct(Files $filename)
+    {
+        $this->setFile($filename);
+        $this->getArrayFromFile();
+    }
 
     /**
      * @return void
@@ -27,6 +33,6 @@ class Base
 
     protected function setFile(Files $name): void
     {
-        $this->file = __DIR__ . DIRECTORY_SEPARATOR . static::$year . DIRECTORY_SEPARATOR . static::$day . DIRECTORY_SEPARATOR . $name->value;
+        $this->file = __DIR__ . DIRECTORY_SEPARATOR . $this->year . DIRECTORY_SEPARATOR . $this->day . DIRECTORY_SEPARATOR . $name->value;
     }
 }

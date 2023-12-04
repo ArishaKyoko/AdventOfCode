@@ -10,13 +10,10 @@ class RucksackReorganization extends Base
 {
 	private const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 
-    protected static string $year = 'Year2022';
-    protected static string $day = 'Day03';
-
     public function __construct(Files $filename)
     {
-        $this->setFile($filename);
-        $this->getArrayFromFile();
+        $this->setDayAndYear(__NAMESPACE__);
+        parent::__construct($filename);
     }
 
     public function output(): void

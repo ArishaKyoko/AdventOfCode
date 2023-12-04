@@ -7,7 +7,7 @@ use AoC\Enums\Files;
 
 require '../../../vendor/autoload.php';
 
-$example = new CubeConundrum(Files::EXAMPLE_ONE);
+$example = new CubeConundrum(Files::EXAMPLE);
 $example->output();
 
 echo PHP_EOL . PHP_EOL;

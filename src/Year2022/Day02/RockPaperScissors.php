@@ -54,13 +54,10 @@ class RockPaperScissors extends Base
 		self::SCISSOR_PLAYER_ONE => self::SCISSOR_PLAYER_TWO,
 	];
 
-    protected static string $year = 'Year2022';
-    protected static string $day = 'Day02';
-
 	public function __construct(Files $filename)
 	{
-        $this->setFile($filename);
-        $this->getArrayFromFile();
+        $this->setDayAndYear(__NAMESPACE__);
+        parent::__construct($filename);
 	}
 
     public function output(): void
