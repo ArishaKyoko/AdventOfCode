@@ -8,13 +8,10 @@ use AoC\Enums\Files;
 
 class MonkeyMath extends Base
 {
-    protected static string $year = 'Year2022';
-    protected static string $day = 'Day21';
-
     public function __construct(Files $filename)
     {
-        $this->setFile($filename);
-        $this->getArrayFromFile();
+        $this->setDayAndYear(__NAMESPACE__);
+        parent::__construct($filename);
     }
 
     public function output(): void

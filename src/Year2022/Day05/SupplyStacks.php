@@ -9,9 +9,6 @@ use AoC\Enums\Files;
 
 class SupplyStacks extends Base
 {
-    protected static string $year = 'Year2022';
-    protected static string $day = 'Day05';
-
 	private array $_crates = [
         [
             1 => ['Z', 'J', 'G'],
@@ -36,8 +33,8 @@ class SupplyStacks extends Base
     public function __construct(Files $filename, ExampleSwitch $modus)
     {
         $this->modus = $modus;
-        $this->setFile($filename);
-        $this->getArrayFromFile();
+        $this->setDayAndYear(__NAMESPACE__);
+        parent::__construct($filename);
     }
 
     public function output(): void

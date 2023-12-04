@@ -8,14 +8,12 @@ use AoC\Enums\Files;
 
 class CalorieCounting extends Base
 {
-    protected static string $year = 'Year2022';
-    protected static string $day = 'Day01';
     private array $elvesSum = [];
 
 	public function __construct(Files $filename)
 	{
-        $this->setFile($filename);
-        $this->getArrayFromFile();
+        $this->setDayAndYear(__NAMESPACE__);
+        parent::__construct($filename);
 	}
 
 

@@ -18,13 +18,10 @@ class CubeConundrum extends Base
         self::COLOR_GREEN => 13,
     ];
 
-    protected static string $year = 'Year2023';
-    protected static string $day = 'Day02';
-    
     public function __construct(Files $filename)
     {
-        $this->setFile($filename);
-        $this->getArrayFromFile();
+        $this->setDayAndYear(__NAMESPACE__);
+        parent::__construct($filename);
     }
 
     public function getArrayFromFIle(): void
