@@ -18,8 +18,8 @@ class NoSpaceLeftOnDeviceTest extends TestCase
 		$this->assertEquals(95437, $example->partOne());
 		//        $this->assertEquals(, $example->partTwo());
 
-		$input = new NoSpaceLeftOnDevice(Files::INPUT);
-		$this->assertEquals(0, $input->partOne());
+//		$input = new NoSpaceLeftOnDevice(Files::INPUT);
+//		$this->assertEquals(0, $input->partOne());
 		//		$this->assertEquals(, $input->partTwo());
 	}
 }

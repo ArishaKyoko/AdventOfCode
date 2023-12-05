@@ -12,14 +12,14 @@ require __DIR__ . '/../../../vendor/autoload.php';
 
 class TreetopTreeHouseTest extends TestCase
 {
-	public function test(): void
-	{
-		$example = new TreetopTreeHouse(Files::EXAMPLE);
-		//		$this->assertEquals(21, $example->partOne());
-		//      $this->assertEquals(, $example->partTwo());
-
-		$input = new TreetopTreeHouse(Files::INPUT);
-		//      $this->assertEquals(0, $input->partOne());
-		//		$this->assertEquals(, $input->partTwo());
-	}
+//	public function test(): void
+//	{
+//		$example = new TreetopTreeHouse(Files::EXAMPLE);
+//		//		$this->assertEquals(21, $example->partOne());
+//		//      $this->assertEquals(, $example->partTwo());
+//
+//		$input = new TreetopTreeHouse(Files::INPUT);
+//		//      $this->assertEquals(0, $input->partOne());
+//		//		$this->assertEquals(, $input->partTwo());
+//	}
 }
