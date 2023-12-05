@@ -10,13 +10,6 @@ class CalorieCounting extends Base
 {
     private array $elvesSum = [];
 
-	public function __construct(Files $filename)
-	{
-        $this->setDayAndYear(__NAMESPACE__);
-        parent::__construct($filename);
-	}
-
-
 	public function getArrayFromFile(): void
 	{
 		$fileData = $this->getFileData();

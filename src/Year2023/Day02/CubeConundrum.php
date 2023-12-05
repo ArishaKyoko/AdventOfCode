@@ -18,12 +18,6 @@ class CubeConundrum extends Base
         self::COLOR_GREEN => 13,
     ];
 
-    public function __construct(Files $filename)
-    {
-        $this->setDayAndYear(__NAMESPACE__);
-        parent::__construct($filename);
-    }
-
     public function getArrayFromFIle(): void
     {
         $fileData = $this->getFileData();

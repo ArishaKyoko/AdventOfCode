@@ -10,19 +10,6 @@ class RucksackReorganization extends Base
 {
 	private const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 
-    public function __construct(Files $filename)
-    {
-        $this->setDayAndYear(__NAMESPACE__);
-        parent::__construct($filename);
-    }
-
-    public function output(): void
-    {
-        echo 'Output Part One: ' . $this->partOne();
-        echo PHP_EOL;
-        echo 'Output Part Two: ' . $this->partTwo();
-    }
-
 	/**
 	 * @param array $items
 	 * @return int

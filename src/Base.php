@@ -19,6 +19,7 @@ class Base
 
     public function __construct(Files $filename)
     {
+        $this->setDayAndYear();
         $this->setFile($filename);
         $this->getArrayFromFile();
     }

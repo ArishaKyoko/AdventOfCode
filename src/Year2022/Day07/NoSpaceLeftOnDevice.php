@@ -13,19 +13,6 @@ class NoSpaceLeftOnDevice extends Base
 	private const COMMAND_LS = 'ls';
 	private const COMMAND_DIR = 'dir';
 
-    public function __construct(Files $filename)
-    {
-        $this->setDayAndYear(__NAMESPACE__);
-        parent::__construct($filename);
-    }
-
-    public function output(): void
-    {
-        echo 'Output Part One: ' . $this->partOne();
-        echo PHP_EOL;
-        echo 'Output Part Two: ' . $this->partTwo();
-    }
-
 	public function partOne(): int
 	{
         $structure = self::_buildDirStructure($this->fileArray);
