@@ -4,18 +4,10 @@ declare(strict_types=1);
 namespace AoC\Year2022\Day01;
 
 use AoC\Base;
-use AoC\Enums\Files;
 
 class CalorieCounting extends Base
 {
     private array $elvesSum = [];
-
-	public function __construct(Files $filename)
-	{
-        $this->setDayAndYear(__NAMESPACE__);
-        parent::__construct($filename);
-	}
-
 
 	public function getArrayFromFile(): void
 	{
@@ -33,13 +25,6 @@ class CalorieCounting extends Base
 
 		$this->fileArray = $fileToArray;
 	}
-
-    public function output(): void
-    {
-        echo 'Output Part One: ' . $this->partOne();
-        echo PHP_EOL;
-        echo 'Output Part Two: ' . $this->partTwo();
-    }
 
     /**
      * Sum Calories pro elf

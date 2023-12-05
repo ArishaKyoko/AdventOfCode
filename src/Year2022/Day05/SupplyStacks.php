@@ -33,15 +33,7 @@ class SupplyStacks extends Base
     public function __construct(Files $filename, ExampleSwitch $modus)
     {
         $this->modus = $modus;
-        $this->setDayAndYear(__NAMESPACE__);
         parent::__construct($filename);
-    }
-
-    public function output(): void
-    {
-        echo 'Output Part One: ' . $this->partOne();
-        echo PHP_EOL;
-        echo 'Output Part Two: ' . $this->partTwo();
     }
 
 	public function getArrayFromFile(): void

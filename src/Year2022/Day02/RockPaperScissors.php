@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace AoC\Year2022\Day02;
 
 use AoC\Base;
-use AoC\Enums\Files;
 
 class RockPaperScissors extends Base
 {
@@ -53,19 +52,6 @@ class RockPaperScissors extends Base
 		self::PAPER_PLAYER_ONE => self::PAPER_PLAYER_TWO,
 		self::SCISSOR_PLAYER_ONE => self::SCISSOR_PLAYER_TWO,
 	];
-
-	public function __construct(Files $filename)
-	{
-        $this->setDayAndYear(__NAMESPACE__);
-        parent::__construct($filename);
-	}
-
-    public function output(): void
-    {
-        echo 'Output Part One: ' . $this->partOne();
-        echo PHP_EOL;
-        echo 'Output Part Two: ' . $this->partTwo();
-    }
 
 	public function getArrayFromFile(): void
 	{
