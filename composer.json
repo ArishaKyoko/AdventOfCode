@@ -27,4 +27,9 @@
     "phpunit/phpunit": "^9.5",
     "friendsofphp/php-cs-fixer": "~3.8"
   }
+	"scripts": {
+		"phpstan": "./vendor/bin/phpstan --memory-limit=512M analyse",
+		"fix-style": "./vendor/bin/php-cs-fixer fix",
+		"test-fast": "./vendor/bin/phpunit -c phpunit.xml"
+	}
 }
