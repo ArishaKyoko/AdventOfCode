@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoC\Year2022\Day04;
@@ -8,12 +9,11 @@ use AoC\Base;
 class CampCleanup extends Base
 {
 	public function getArrayFromFile(): void
-    {
+	{
 		$fileData = $this->getFileData();
 
 		$fileToArray = [];
 		foreach ($fileData as $iValue) {
-			/** @var array $explode */
 			$explode = explode(',', $iValue);
 			$fileToArray[] = [
 				$explode[0],
@@ -64,11 +64,13 @@ class CampCleanup extends Base
 		return $howManyPairs;
 	}
 
+    /**
+     * @param string[] $pairs
+     * @return int[]
+     */
 	private static function _splitPairs(array $pairs): array
 	{
-		/** @var array $exp_1 */
 		$exp_1 = explode('-', $pairs[0]);
-		/** @var array $exp_2 */
 		$exp_2 = explode('-', $pairs[1]);
 
 		return [

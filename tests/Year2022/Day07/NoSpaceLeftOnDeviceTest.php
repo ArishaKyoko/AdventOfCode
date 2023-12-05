@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoCTest\Year2022\Day07;
@@ -13,12 +14,12 @@ class NoSpaceLeftOnDeviceTest extends TestCase
 {
 	public function test(): void
 	{
-        $example = new NoSpaceLeftOnDevice(Files::EXAMPLE);
+		$example = new NoSpaceLeftOnDevice(Files::EXAMPLE);
 		$this->assertEquals(95437, $example->partOne());
-//        $this->assertEquals(, $example->partTwo());
+		//        $this->assertEquals(, $example->partTwo());
 
-        $input = new NoSpaceLeftOnDevice(Files::INPUT);
-        $this->assertEquals(0, $input->partOne());
-//		$this->assertEquals(, $input->partTwo());
+		$input = new NoSpaceLeftOnDevice(Files::INPUT);
+		$this->assertEquals(0, $input->partOne());
+		//		$this->assertEquals(, $input->partTwo());
 	}
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoC\Year2022\Day03;
@@ -9,17 +10,16 @@ class RucksackReorganization extends Base
 {
 	private const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 
-	/**
-	 * @param array $items
-	 * @return int
-	 */
+    /**
+     * @return int
+     */
 	public function partOne(): int
 	{
 		$priorities = [];
 		foreach ($this->fileArray as $item) {
 			$count = strlen($item);
-			$string1 = str_split(substr($item, 0, ($count/2)));
-			$string2 = str_split(substr($item, ($count/2)));
+			$string1 = str_split(substr($item, 0, (int) ($count / 2)));
+			$string2 = str_split(substr($item, (int) ($count / 2)));
 			$diff = array_unique(array_intersect($string1, $string2));
 			$newString = implode('', $diff);
 

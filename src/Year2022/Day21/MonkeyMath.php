@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoC\Year2022\Day21;
@@ -7,13 +8,12 @@ use AoC\Base;
 
 class MonkeyMath extends Base
 {
-    public function getArrayFromFile(): void
-    {
+	public function getArrayFromFile(): void
+	{
 		$fileData = $this->getFileData();
 
 		$_monkeys = [];
 		foreach ($fileData as $monkey) {
-			/** @var array $explode */
 			$explode = explode(' ', $monkey);
 			$monkeyname = str_replace(':', '', $explode[0]);
 
@@ -33,25 +33,23 @@ class MonkeyMath extends Base
 		$this->fileArray = $_monkeys;
 	}
 
-    /**
-     * @return int
-     */
+	/**
+	 * @return int
+	 */
 	public function partOne(): int
 	{
 		return $this->_calculate($this->fileArray['root'], $this->fileArray);
 	}
-	
-	public function partTwo(): void
-	{
 
-	}
+	public function partTwo(): void {}
 
 	/**
-	 * @param int|array $monkey
-	 * @param array $allMonkeys
+	 * @param array<string, string>|int $monkey
+	 * @param array<string, array<string, string>> $allMonkeys
+	 *
 	 * @return int
 	 */
-	private function _calculate($monkey, array $allMonkeys): int
+	private function _calculate(array|int $monkey, array $allMonkeys): int
 	{
 		if (is_numeric($monkey)) {
 			return $monkey;

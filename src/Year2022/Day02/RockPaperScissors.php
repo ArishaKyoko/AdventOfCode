@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoC\Year2022\Day02;
@@ -58,8 +59,7 @@ class RockPaperScissors extends Base
 		$fileData = $this->getFileData();
 		$fileToArray = [];
 		foreach ($fileData as $iValue) {
-			/** @var array $explode */
-			$explode = explode(' ', $iValue);
+            $explode = explode(' ', $iValue);
 			$fileToArray[] = [
 				$explode[0],
 				$explode[1],
@@ -69,9 +69,9 @@ class RockPaperScissors extends Base
 		$this->fileArray = $fileToArray;
 	}
 
-    /**
-     * @return int
-     */
+	/**
+	 * @return int
+	 */
 	public function partOne(): int
 	{
 		$scores = [];
@@ -91,26 +91,26 @@ class RockPaperScissors extends Base
 		return array_sum($scores);
 	}
 
-    /**
-     * @return int
-     */
+	/**
+	 * @return int
+	 */
 	public function partTwo(): int
 	{
 		$scores = [];
 		foreach ($this->fileArray as $game) {
 			switch ($game[1]) {
-			    case self::ROCK_PLAYER_TWO: 	//lose x
+				case self::ROCK_PLAYER_TWO: 	//lose x
 					$score = self::POINTS_LOSE;
 					$score += self::POINTS[self::LOOSES[$game[0]]];
-			        break;
-			    case self::PAPER_PLAYER_TWO:	// draw y
+					break;
+				case self::PAPER_PLAYER_TWO:	// draw y
 					$score = self::POINTS_DRAW;
 					$score += self::POINTS[self::DRAWS[$game[0]]];
-			        break;
-			    case self::SCISSOR_PLAYER_TWO:	// win z
+					break;
+				case self::SCISSOR_PLAYER_TWO:	// win z
 					$score = self::POINTS_WIN;
 					$score += self::POINTS[self::WINS_FROM_ONE[$game[0]]];
-			        break;
+					break;
 				default:
 					$score = 0;
 					break;

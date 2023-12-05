@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoCTest\Year2022\Day03;
@@ -15,10 +16,10 @@ class RucksackReorganizationTest extends TestCase
 	{
 		$example = new RucksackReorganization(Files::EXAMPLE);
 		$this->assertEquals(157, $example->partOne());
-        $this->assertEquals(70, $example->partTwo());
+		$this->assertEquals(70, $example->partTwo());
 
-        $input = new RucksackReorganization(Files::INPUT);
-        $this->assertEquals(7817, $input->partOne());
+		$input = new RucksackReorganization(Files::INPUT);
+		$this->assertEquals(7817, $input->partOne());
 		$this->assertEquals(2444, $input->partTwo());
 	}
 }

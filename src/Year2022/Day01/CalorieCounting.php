@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoC\Year2022\Day01;
@@ -7,7 +8,8 @@ use AoC\Base;
 
 class CalorieCounting extends Base
 {
-    private array $elvesSum = [];
+    /** @var int[] */
+	private array $elvesSum = [];
 
 	public function getArrayFromFile(): void
 	{
@@ -26,11 +28,11 @@ class CalorieCounting extends Base
 		$this->fileArray = $fileToArray;
 	}
 
-    /**
-     * Sum Calories pro elf
-     *
-     * @return int
-     */
+	/**
+	 * Sum Calories pro elf
+	 *
+	 * @return int
+	 */
 	public function partOne(): int
 	{
 		$elvesSum = [];
@@ -38,16 +40,16 @@ class CalorieCounting extends Base
 			$elvesSum[$elf] = array_sum($calories);
 		}
 
-        $this->elvesSum = $elvesSum;
+		$this->elvesSum = $elvesSum;
 
 		return max($elvesSum);
 	}
 
-    /**
-     * Sum of Calories of top three elves
-     *
-     * @return int
-     */
+	/**
+	 * Sum of Calories of top three elves
+	 *
+	 * @return int
+	 */
 	public function partTwo(): int
 	{
 		$topThreeElvesCalories = [];

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoCTest\Year2022\Day21;
@@ -13,12 +14,12 @@ class MonkeyMathTest extends TestCase
 {
 	public function test(): void
 	{
-        $example = new MonkeyMath(Files::EXAMPLE);
+		$example = new MonkeyMath(Files::EXAMPLE);
 		$this->assertEquals(152, $example->partOne());
-//      $this->assertEquals(, $example->partTwo());
+		//      $this->assertEquals(, $example->partTwo());
 
-        $input = new MonkeyMath(Files::INPUT);
-        $this->assertEquals(168502451381566, $input->partOne());
-//		$this->assertEquals(, $input->partTwo());
+		$input = new MonkeyMath(Files::INPUT);
+		$this->assertEquals(168502451381566, $input->partOne());
+		//		$this->assertEquals(, $input->partTwo());
 	}
 }

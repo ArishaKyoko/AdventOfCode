@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoC\Year2022\Day07;
@@ -14,7 +15,7 @@ class NoSpaceLeftOnDevice extends Base
 
 	public function partOne(): int
 	{
-        $structure = self::_buildDirStructure($this->fileArray);
+		$structure = self::_buildDirStructure($this->fileArray);
 		$dirSizes = [];
 		self::_getDirSizes($structure['_/'], $dirSizes, $structure);
 
@@ -28,11 +29,12 @@ class NoSpaceLeftOnDevice extends Base
 		return array_sum($smallDirs);
 	}
 
-	public function partTwo(): void
-	{
+	public function partTwo(): void {}
 
-	}
-
+    /**
+     * @param string[] $list
+     * @return array<string, array<string, int|string>>
+     */
 	private static function _buildDirStructure(array $list): array
 	{
 		$structure = [];
@@ -40,7 +42,6 @@ class NoSpaceLeftOnDevice extends Base
 		$prevDir = '';
 		$path = [];
 		foreach ($list as $item) {
-			/** @var array $explode */
 			$explode = explode(' ', $item);
 
 			if ($explode[1] === self::COMMAND_LS) {
@@ -79,6 +80,13 @@ class NoSpaceLeftOnDevice extends Base
 		return $structure;
 	}
 
+    /**
+     * @param array<string, int|string> $files
+     * @param array<string, int> $dirSize
+     * @param array<string, array<string, int|string>> $structure
+     * @param string $dirname
+     * @return void
+     */
 	private static function _getDirSizes(array $files, array &$dirSize, array $structure, string $dirname = '_/'): void
 	{
 		$explode = explode('_', $dirname);

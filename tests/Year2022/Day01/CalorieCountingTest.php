@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoCTest\Year2022\Day01;
@@ -17,8 +18,8 @@ class CalorieCountingTest extends TestCase
 		$this->assertEquals(24000, $example->partOne());
 		$this->assertEquals(45000, $example->partTwo());
 
-        $input = new CalorieCounting(Files::INPUT);
-        $this->assertEquals(70374, $input->partOne());
-        $this->assertEquals(204610, $input->partTwo());
+		$input = new CalorieCounting(Files::INPUT);
+		$this->assertEquals(70374, $input->partOne());
+		$this->assertEquals(204610, $input->partTwo());
 	}
 }

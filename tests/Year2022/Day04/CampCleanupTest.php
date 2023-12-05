@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoCTest\Year2022\Day04;
@@ -15,10 +16,10 @@ class CampCleanupTest extends TestCase
 	{
 		$example = new CampCleanup(Files::EXAMPLE);
 		$this->assertEquals(2, $example->partOne());
-        $this->assertEquals(4, $example->partTwo());
+		$this->assertEquals(4, $example->partTwo());
 
-        $input = new CampCleanup(Files::INPUT);
-        $this->assertEquals(562, $input->partOne());
+		$input = new CampCleanup(Files::INPUT);
+		$this->assertEquals(562, $input->partOne());
 		$this->assertEquals(924, $input->partTwo());
 	}
 }

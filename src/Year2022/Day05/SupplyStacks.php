@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoC\Year2022\Day05;
@@ -9,36 +10,37 @@ use AoC\Enums\Files;
 
 class SupplyStacks extends Base
 {
+    /** @var array<int, array<int, string[]>>  */
 	private array $_crates = [
-        [
-            1 => ['Z', 'J', 'G'],
-            2 => ['Q', 'L', 'R', 'P', 'W', 'F', 'V', 'C'],
-            3 => ['F', 'P', 'M', 'C', 'L', 'G', 'R'],
-            4 => ['L', 'F', 'B', 'W', 'P', 'H', 'M'],
-            5 => ['G', 'C', 'F', 'S', 'V', 'Q'],
-            6 => ['W', 'H', 'J', 'Z', 'M', 'Q', 'T', 'L'],
-            7 => ['H', 'F', 'S', 'B', 'V'],
-            8 => ['F', 'J', 'Z', 'S'],
-            9 => ['M', 'C', 'D', 'P', 'F', 'H', 'B', 'T'],
-        ],
-        [
-            1 => ['Z', 'N'],
-            2 => ['M', 'C', 'D'],
-            3 => ['P'],
-        ]
-    ];
+		[
+			1 => ['Z', 'J', 'G'],
+			2 => ['Q', 'L', 'R', 'P', 'W', 'F', 'V', 'C'],
+			3 => ['F', 'P', 'M', 'C', 'L', 'G', 'R'],
+			4 => ['L', 'F', 'B', 'W', 'P', 'H', 'M'],
+			5 => ['G', 'C', 'F', 'S', 'V', 'Q'],
+			6 => ['W', 'H', 'J', 'Z', 'M', 'Q', 'T', 'L'],
+			7 => ['H', 'F', 'S', 'B', 'V'],
+			8 => ['F', 'J', 'Z', 'S'],
+			9 => ['M', 'C', 'D', 'P', 'F', 'H', 'B', 'T'],
+		],
+		[
+			1 => ['Z', 'N'],
+			2 => ['M', 'C', 'D'],
+			3 => ['P'],
+		]
+	];
 
-    private ExampleSwitch $modus;
+	private ExampleSwitch $modus;
 
-    public function __construct(Files $filename, ExampleSwitch $modus)
-    {
-        $this->modus = $modus;
-        parent::__construct($filename);
-    }
+	public function __construct(Files $filename, ExampleSwitch $modus)
+	{
+		$this->modus = $modus;
+		parent::__construct($filename);
+	}
 
 	public function getArrayFromFile(): void
-    {
-        $fileData = $this->getFileData();
+	{
+		$fileData = $this->getFileData();
 
 		$fileToArray = [];
 		foreach ($fileData as $iValue) {
@@ -52,19 +54,19 @@ class SupplyStacks extends Base
 		$this->fileArray = $fileToArray;
 	}
 
-    /**
-     * @return string
-     */
+	/**
+	 * @return string
+	 */
 	public function partOne(): string
 	{
-        $crates = $this->_crates[$this->modus->value];
+		$crates = $this->_crates[$this->modus->value];
 		foreach ($this->fileArray as $rearrangement) {
 			[$move, $from, $to] = self::_splitRearrangements($rearrangement);
 
 			for ($i = 1; $i <= $move; $i++) {
-				$slice = $crates[$from][count($crates[$from])-1];
+				$slice = $crates[$from][count($crates[$from]) - 1];
 				$crates[$to][] = $slice;
-				unset($crates[$from][count($crates[$from])-1]);
+				unset($crates[$from][count($crates[$from]) - 1]);
 			}
 
 			// reset array indexes
@@ -76,25 +78,25 @@ class SupplyStacks extends Base
 
 		$endsUp = [];
 		foreach ($crates as $crate) {
-			$endsUp[] = $crate[count($crate)-1];
+			$endsUp[] = $crate[count($crate) - 1];
 		}
 
 		return implode('', $endsUp);
 	}
 
-    /**
-     * @return string
-     */
+	/**
+	 * @return string
+	 */
 	public function partTwo(): string
 	{
-        $crates = $this->_crates[$this->modus->value];
+		$crates = $this->_crates[$this->modus->value];
 		foreach ($this->fileArray as $rearrangement) {
 			[$move, $from, $to] = self::_splitRearrangements($rearrangement);
 
 			//todo
 			$slice = [];
 			for ($i = 1; $i <= $move; $i++) {
-				$slice[] = $crates[$from][count($crates[$from])-1];
+				$slice[] = $crates[$from][count($crates[$from]) - 1];
 				array_pop($crates[$from]);
 			}
 			$crates[$to] = array_merge($crates[$to], array_reverse($slice));
@@ -108,7 +110,7 @@ class SupplyStacks extends Base
 
 		$endsUp = [];
 		foreach ($crates as $crate) {
-			$endsUp[] = $crate[count($crate)-1];
+			$endsUp[] = $crate[count($crate) - 1];
 		}
 
 		return implode('', $endsUp);
@@ -116,11 +118,11 @@ class SupplyStacks extends Base
 
 	/**
 	 * @param string $rearrangement
+	 *
 	 * @return int[]
 	 */
 	private static function _splitRearrangements(string $rearrangement): array
 	{
-		/** @var array $explode */
 		$explode = explode(' ', $rearrangement);
 		return [
 			(int) $explode[1], //move

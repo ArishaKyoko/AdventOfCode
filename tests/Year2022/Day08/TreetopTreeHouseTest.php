@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoCTest\Year2022\Day08;
@@ -13,12 +14,12 @@ class TreetopTreeHouseTest extends TestCase
 {
 	public function test(): void
 	{
-        $example = new TreetopTreeHouse(Files::EXAMPLE);
-//		$this->assertEquals(21, $example->partOne());
-//      $this->assertEquals(, $example->partTwo());
+		$example = new TreetopTreeHouse(Files::EXAMPLE);
+		//		$this->assertEquals(21, $example->partOne());
+		//      $this->assertEquals(, $example->partTwo());
 
-        $input = new TreetopTreeHouse(Files::INPUT);
-//      $this->assertEquals(0, $input->partOne());
-//		$this->assertEquals(, $input->partTwo());
+		$input = new TreetopTreeHouse(Files::INPUT);
+		//      $this->assertEquals(0, $input->partOne());
+		//		$this->assertEquals(, $input->partTwo());
 	}
 }

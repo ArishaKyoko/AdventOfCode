@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace AoC\Traits;
 
-Trait CanReadFiles
+trait CanReadFiles
 {
 	public function getFileData(): array
 	{
