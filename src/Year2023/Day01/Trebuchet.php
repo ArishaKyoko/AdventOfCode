@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace AoC\Year2023\Day01;
 
 use AoC\Base;
-use AoC\Enums\Files;
 
 class Trebuchet extends Base
 {

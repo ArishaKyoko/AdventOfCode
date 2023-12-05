@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace AoC\Year2022\Day02;
 
 use AoC\Base;
-use AoC\Enums\Files;
 
 class RockPaperScissors extends Base
 {

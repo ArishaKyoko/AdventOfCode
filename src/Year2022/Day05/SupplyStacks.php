@@ -36,13 +36,6 @@ class SupplyStacks extends Base
         parent::__construct($filename);
     }
 
-    public function output(): void
-    {
-        echo 'Output Part One: ' . $this->partOne();
-        echo PHP_EOL;
-        echo 'Output Part Two: ' . $this->partTwo();
-    }
-
 	public function getArrayFromFile(): void
     {
         $fileData = $this->getFileData();
