@@ -8,8 +8,6 @@ use AoC\Enums\Files;
 use AoC\Year2023\Day04\Scratchcards;
 use PHPUnit\Framework\TestCase;
 
-require __DIR__ . '/../../../vendor/autoload.php';
-
 class ScratchcardsTest extends TestCase
 {
 	/**
