@@ -36,11 +36,7 @@ class HistorianHysteria extends Base
 
 		$sum = 0;
 		for ($i = 0; $i < count($left); $i++) {
-			if ($left[$i] > $right[$i]) {
-				$sum += $left[$i] - $right[$i];
-			} else {
-				$sum += $right[$i] - $left[$i];
-			}
+			$sum += abs($left[$i] - $right[$i]);
 		}
 
 		return $sum;
