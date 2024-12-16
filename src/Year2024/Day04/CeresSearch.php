@@ -24,83 +24,84 @@ class CeresSearch extends Base
 		foreach ($this->fileArray as $string) {
 			$this->chars[] = str_split($string);
 		}
+
+		$this->list = $this->chars;
 	}
 
 	public function partOne(): int|string
 	{
-		$chars = $this->chars;
 		$counter = 0;
-		for ($i = 0; $i < count($chars); $i++) {
-			for ($j = 0; $j < count($chars[$i]); $j++) {
-				if ($this->findPosition($chars, $i, $j, 'X')) {
+		for ($i = 0; $i < count($this->chars); $i++) {
+			for ($j = 0; $j < count($this->chars[$i]); $j++) {
+				if ($this->findPosition($i, $j, 'X')) {
 					// horizontal rechts
 					if (
-						$this->findPosition($chars, $i, $j + 1, 'M')
-						&& $this->findPosition($chars, $i, $j + 2, 'A')
-						&& $this->findPosition($chars, $i, $j + 3, 'S')
+						$this->findPosition($i, $j + 1, 'M')
+						&& $this->findPosition($i, $j + 2, 'A')
+						&& $this->findPosition($i, $j + 3, 'S')
 					) {
 						$counter++;
 					}
 
 					// horizontal links
 					if (
-						$this->findPosition($chars, $i, $j - 1, 'M')
-						&& $this->findPosition($chars, $i, $j - 2, 'A')
-						&& $this->findPosition($chars, $i, $j - 3, 'S')
+						$this->findPosition($i, $j - 1, 'M')
+						&& $this->findPosition($i, $j - 2, 'A')
+						&& $this->findPosition($i, $j - 3, 'S')
 					) {
 						$counter++;
 					}
 
 					// vertikal unten
 					if (
-						$this->findPosition($chars, $i + 1, $j, 'M')
-						&& $this->findPosition($chars, $i + 2, $j, 'A')
-						&& $this->findPosition($chars, $i + 3, $j, 'S')
+						$this->findPosition($i + 1, $j, 'M')
+						&& $this->findPosition($i + 2, $j, 'A')
+						&& $this->findPosition($i + 3, $j, 'S')
 					) {
 						$counter++;
 					}
 
 					// vertikal hoch
 					if (
-						$this->findPosition($chars, $i - 1, $j, 'M')
-						&& $this->findPosition($chars, $i - 2, $j, 'A')
-						&& $this->findPosition($chars, $i - 3, $j, 'S')
+						$this->findPosition($i - 1, $j, 'M')
+						&& $this->findPosition($i - 2, $j, 'A')
+						&& $this->findPosition($i - 3, $j, 'S')
 					) {
 						$counter++;
 					}
 
 					// diagonal rechts unten
 					if (
-						$this->findPosition($chars, $i + 1, $j + 1, 'M')
-						&& $this->findPosition($chars, $i + 2, $j + 2, 'A')
-						&& $this->findPosition($chars, $i + 3, $j + 3, 'S')
+						$this->findPosition($i + 1, $j + 1, 'M')
+						&& $this->findPosition($i + 2, $j + 2, 'A')
+						&& $this->findPosition($i + 3, $j + 3, 'S')
 					) {
 						$counter++;
 					}
 
 					// diagonal links unten
 					if (
-						$this->findPosition($chars, $i + 1, $j - 1, 'M')
-						&& $this->findPosition($chars, $i + 2, $j - 2, 'A')
-						&& $this->findPosition($chars, $i + 3, $j - 3, 'S')
+						$this->findPosition($i + 1, $j - 1, 'M')
+						&& $this->findPosition($i + 2, $j - 2, 'A')
+						&& $this->findPosition($i + 3, $j - 3, 'S')
 					) {
 						$counter++;
 					}
 
 					// diagonal rechts hoch
 					if (
-						$this->findPosition($chars, $i - 1, $j + 1, 'M')
-						&& $this->findPosition($chars, $i - 2, $j + 2, 'A')
-						&& $this->findPosition($chars, $i - 3, $j + 3, 'S')
+						$this->findPosition($i - 1, $j + 1, 'M')
+						&& $this->findPosition($i - 2, $j + 2, 'A')
+						&& $this->findPosition($i - 3, $j + 3, 'S')
 					) {
 						$counter++;
 					}
 
 					// diagonal links hoch
 					if (
-						$this->findPosition($chars, $i - 1, $j - 1, 'M')
-						&& $this->findPosition($chars, $i - 2, $j - 2, 'A')
-						&& $this->findPosition($chars, $i - 3, $j - 3, 'S')
+						$this->findPosition($i - 1, $j - 1, 'M')
+						&& $this->findPosition($i - 2, $j - 2, 'A')
+						&& $this->findPosition($i - 3, $j - 3, 'S')
 					) {
 						$counter++;
 					}
@@ -113,67 +114,66 @@ class CeresSearch extends Base
 
 	public function partTwo(): int|string
 	{
-		$chars = $this->chars;
 		$counter = 0;
-		for ($i = 0; $i < count($chars); $i++) {
-			for ($j = 0; $j < count($chars[$i]); $j++) {
-				if ($this->findPosition($chars, $i, $j, 'A')) {
+		for ($i = 0; $i < count($this->chars); $i++) {
+			for ($j = 0; $j < count($this->chars[$i]); $j++) {
+				if ($this->findPosition($i, $j, 'A')) {
 					if (
-						$this->findPositionTopLeft($chars, $i, $j, 'M')
-						&& $this->findPositionDownRight($chars, $i, $j, 'S')
+						$this->findPositionTopLeft($i, $j, 'M')
+						&& $this->findPositionDownRight($i, $j, 'S')
 					) {
 						if (
 							(
-								$this->findPositionTopRight($chars, $i, $j, 'M')
-								&& $this->findPositionDownLeft($chars, $i, $j, 'S')
+								$this->findPositionTopRight($i, $j, 'M')
+								&& $this->findPositionDownLeft($i, $j, 'S')
 							) || (
-								$this->findPositionDownLeft($chars, $i, $j, 'M')
-								&& $this->findPositionTopRight($chars, $i, $j, 'S')
+								$this->findPositionDownLeft($i, $j, 'M')
+								&& $this->findPositionTopRight($i, $j, 'S')
 							)
 						) {
 							$counter++;
 						}
 					} else if (
-						$this->findPositionTopRight($chars, $i, $j, 'M')
-						&& $this->findPositionDownLeft($chars, $i, $j, 'S')
+						$this->findPositionTopRight($i, $j, 'M')
+						&& $this->findPositionDownLeft($i, $j, 'S')
 					) {
 						if (
 							(
-								$this->findPositionTopLeft($chars, $i, $j, 'M')
-								&& $this->findPositionDownRight($chars, $i, $j, 'S')
+								$this->findPositionTopLeft($i, $j, 'M')
+								&& $this->findPositionDownRight($i, $j, 'S')
 							) || (
-								$this->findPositionDownRight($chars, $i, $j, 'M')
-								&& $this->findPositionTopLeft($chars, $i, $j, 'S')
+								$this->findPositionDownRight($i, $j, 'M')
+								&& $this->findPositionTopLeft($i, $j, 'S')
 							)
 						) {
 							$counter++;
 						}
 					} else if (
-						$this->findPositionDownRight($chars, $i, $j, 'M')
-						&& $this->findPositionTopLeft($chars, $i, $j, 'S')
+						$this->findPositionDownRight($i, $j, 'M')
+						&& $this->findPositionTopLeft($i, $j, 'S')
 					) {
 						if (
 							(
-								$this->findPositionDownLeft($chars, $i, $j, 'M')
-								&& $this->findPositionTopRight($chars, $i, $j, 'S')
+								$this->findPositionDownLeft($i, $j, 'M')
+								&& $this->findPositionTopRight($i, $j, 'S')
 							) || (
-								$this->findPositionTopRight($chars, $i, $j, 'M')
-								&& $this->findPositionDownLeft($chars, $i, $j, 'S')
+								$this->findPositionTopRight($i, $j, 'M')
+								&& $this->findPositionDownLeft($i, $j, 'S')
 							)
 						) {
 							$counter++;
 						}
 					} else if (
-						$this->findPositionDownLeft($chars, $i, $j, 'M')
-						&& $this->findPositionTopRight($chars, $i, $j, 'S')
+						$this->findPositionDownLeft($i, $j, 'M')
+						&& $this->findPositionTopRight($i, $j, 'S')
 					) {
 						if (
 							(
-								$this->findPositionTopLeft($chars, $i, $j, 'M')
-								&& $this->findPositionDownRight($chars, $i, $j, 'S')
+								$this->findPositionTopLeft($i, $j, 'M')
+								&& $this->findPositionDownRight($i, $j, 'S')
 							) || (
-								$this->findPositionDownRight($chars, $i, $j, 'M')
-								&& $this->findPositionTopLeft($chars, $i, $j, 'S')
+								$this->findPositionDownRight($i, $j, 'M')
+								&& $this->findPositionTopLeft($i, $j, 'S')
 							)
 						) {
 							$counter++;
